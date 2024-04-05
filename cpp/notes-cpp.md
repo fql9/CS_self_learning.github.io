@@ -1,3 +1,3 @@
 # CPP notes
 
-https://zh.cppreference.com/w/cpp
+*[CPP reference](https://zh.cppreference.com/w/cpp)*
