@@ -1,0 +1,423 @@
+
+
+
+
+
+
+
+
+
+
+
+\input{supcon_teaser}
+
+\section{Gradient Derivation}
+\label{sec:gradient_derivation}
+In Sec. 3 of the paper, we make the claim that the gradients of the two considered supervised contrastive losses, $\mathcal{L}_{out}^{sup}$ and $\mathcal{L}_{in}^{sup}$, with respect to a normalized projection network representation, $\boldsymbol{z}_i$, have a nearly identical mathematical form. In this section, we perform derivations to show this is true. It is sufficient to show that this claim is true for $\mathcal{L}_{out,i}^{sup}$ and $\mathcal{L}_{in,i}^{sup}$. For convenience, we reprint below the expressions for each.
+\begin{equation}
+  \mathcal{L}_{in,i}^{sup}
+  =-\log\left\{\frac{1}{|P(i)|}\sum_{p\in P(i)}\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}\right\}
+  \label{eqn:supp_bad_supervised_loss}
+\end{equation}
+\begin{equation}
+  \mathcal{L}_{out,i}^{sup}
+  =\frac{-1}{|P(i)|}\sum_{p\in P(i)}\log{\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}}
+  \label{eqn:supp_supervised_loss}
+\end{equation}
+
+We start by deriving the gradient of $\mathcal{L}_{in}^{sup}$ (Eq. \ref{eqn:supp_bad_supervised_loss}):
+\begin{align}
+  \frac{\partial\mathcal{L}_{in}^{sup}}{\partial\boldsymbol{z}_i} & = -\frac{\partial}{\partial\boldsymbol{z}_i}\log\left\{\frac{1}{|P(i)|}\sum_{p\in P(i)}\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}\right\}\nonumber\\
+  & = \frac{\partial}{\partial\boldsymbol{z}_i}\log\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)-\frac{\partial}{\partial\boldsymbol{z}_i}\log\sum\limits_{p\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)\nonumber\\
+  & = \frac{1}{\tau}\frac{\sum\limits_{a\in A(i)}\boldsymbol{z}_a\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}-\frac{1}{\tau}\frac{\sum\limits_{p\in P(i)}\boldsymbol{z}_p\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{p\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}\nonumber\\
+  & = \frac{1}{\tau}\frac{\sum\limits_{p\in P(i)}\boldsymbol{z}_p\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)+\sum\limits_{n\in N(i)}\boldsymbol{z}_n\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}-\frac{1}{\tau}\frac{\sum\limits_{p\in P(i)}\boldsymbol{z}_p\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{p\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}\nonumber\\
+  & = \frac{1}{\tau}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p(P_{ip}-X_{ip}^{in})+\sum_{n\in N(i)}\boldsymbol{z}_nP_{in}\right\}
+  \label{eqn:supp_bad_supervised_loss_gradient}
+\end{align}
+where we have defined:
+\begin{align}
+  P_{ip}\equiv\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}
+  \label{eqn:supp_pip} \\
+  X_{ip}^{in}\equiv\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)}
+\end{align}
+Though similar in structure, $P_{ip}$ and $X_{ip}^{in}$ are fundamentally different: $P_{ip}$ is the likelihood for $\boldsymbol{z}_p$ with respect to all positives and negatives, while $X_{ip}^{in}$ is that but with respect to only the positives. $P_{in}$ is analogous to $P_{ip}$ but defines the likelihood of $\boldsymbol{z}_n$. In particular, $P_{ip}\le X_{ip}^{in}$. We now derive the gradient of Eq. \ref{eqn:supp_supervised_loss}:
+\begin{align}
+  \frac{\partial\mathcal{L}_{out}^{sup}}{\partial\boldsymbol{z}_i} & = \frac{-1}{|P(i)|}\sum_{p\in P(i)}\frac{\partial}{\partial\boldsymbol{z}_i}\left\{\frac{\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p}{\tau}-\log\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\sum_{p\in P(i)}\left\{\boldsymbol{z}_p-\frac{\sum\limits_{a\in A(i)}\boldsymbol{z}_a\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\sum_{p\in P(i)}\left\{\boldsymbol{z}_p-\sum\limits_{p'\in P(i)}\boldsymbol{z}_{p'}P_{ip'}-\sum\limits_{n\in N(i)}\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p-\sum_{p\in P(i)}\sum\limits_{p'\in P(i)}\boldsymbol{z}_{p'}P_{ip'}-\sum_{p\in P(i)}\sum\limits_{n\in N(i)}\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p-\sum_{p'\in P(i)}\sum\limits_{p\in P(i)}\boldsymbol{z}_{p'}P_{ip'}-\sum_{n\in N(i)}\sum\limits_{p\in P(i)}\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p-\sum_{p'\in P(i)}|P(i)|\boldsymbol{z}_{p'}P_{ip'}-\sum_{n\in N(i)}|P(i)|\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{-1}{\tau|P(i)|}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p-\sum_{p\in P(i)}|P(i)|\boldsymbol{z}_pP_{ip}-\sum_{n\in N(i)}|P(i)|\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{1}{\tau}\left\{\sum_{p\in P(i)}\boldsymbol{z}_p(P_{ip}-X_{ip}^{out})+\sum_{n\in N(i)}\boldsymbol{z}_nP_{in}\right\}
+  \label{eqn:supp_supervised_loss_gradient}
+\end{align}
+where we have defined:
+\begin{equation}
+  X_{ip}^{out}\equiv\frac{1}{|P(i)|}
+\end{equation}
+Thus, both gradients (Eqs. \ref{eqn:supp_bad_supervised_loss_gradient} and \ref{eqn:supp_supervised_loss_gradient}) have a very similar form and can be written collectively as:
+\begin{equation}
+  \label{eqn:supp_gradient}
+  \frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{z}_i} = \frac{1}{\tau}\left\{
+  \sum_{p\in P(i)}\boldsymbol{z}_p(P_{ip}-X_{ip})+
+  \sum_{n\in N(i)}\boldsymbol{z}_nP_{in}
+  \right\}
+\end{equation}
+where:
+\begin{equation}
+  X_{ip}\equiv\left\{
+  \begin{matrix}
+  \frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)} & , & \text{if }\mathcal{L}_i^{sup}=\mathcal{L}_{in,i}^{sup}\\
+  \frac{1}{|P(i)|} & , & \text{if }\mathcal{L}_i^{sup}=\mathcal{L}_{out,i}^{sup}
+  \end{matrix}\right.
+\end{equation}
+
+This corresponds to Eq. 4 and subsequent analysis in the paper.
+
+\section{Intrinsic Hard Positive and Negative Mining Properties}
+\label{sec:hard_mining_properties}
+The contrastive loss is structured so that gradients with respect to the \emph{unnormalized} projection network representations provide an intrinsic mechanism for hard positive/negative mining during training. For losses such as the triplet loss or max-margin, hard mining is known to be crucial to their performance. For contrastive loss, we show analytically that hard mining is intrinsic and thus removes the need for complicated hard mining algorithms.
+
+As shown in Sec. \ref{sec:gradient_derivation}, the gradients of both $\mathcal{L}_{out}^{sup}$ and $\mathcal{L}_{in}^{sup}$ are given by Eq. \ref{eqn:supp_supervised_loss_gradient}. Additionally, note that the self-supervised contrastive loss, $\mathcal{L}_i^{self}$, is a special case of either of the two supervised contrastive losses (when $P(i)=j(i)$). So by showing that Eq. \ref{eqn:supp_supervised_loss_gradient} has structure that provides hard positive/negative mining, it will be shown to be true for all three contrastive losses (self-supervised and both supervised versions).
+
+The projection network applies a normalization to its outputs\footnote{Note that when the normalization is combined with an inner product (as we do here), this is equivalent to cosine similarity. Some contrastive learning approaches \cite{chen2020simple} use a cosine similarity explicitly in their loss formulation. We decouple the normalization here to highlight the benefits it provides.%
+}. We shall let $\boldsymbol{w}_i$ denote the projection network output \emph{prior} to normalization, i.e., $\boldsymbol{z}_i=\boldsymbol{w}_i/\Vert\boldsymbol{w}_i\Vert$. As we show below, normalizing the representations provides structure (when combined with Eq. \ref{eqn:supp_supervised_loss_gradient}) to the gradient enables the learning to focus on hard positives and negatives. The gradient of the supervised loss with respect to $\boldsymbol{w}_i$ is related to that with respect to $\boldsymbol{z}_i$ via the chain rule:
+\begin{equation}
+  \frac{\partial\mathcal{L}_i^{sup}(\boldsymbol{z}_i)}{\partial\boldsymbol{w}_i}=\frac{\partial\boldsymbol{z}_i}{\partial\boldsymbol{w}_i}\frac{\partial\mathcal{L}_i^{sup}(\boldsymbol{z}_i)}{\partial\boldsymbol{z}_i} \label{eqn:supp_gradient_chain_rule}
+\end{equation}
+where:
+\begin{align}
+  \frac{\partial\boldsymbol{z}_i}{\partial\boldsymbol{w}_i} & = \frac{\partial}{\partial\boldsymbol{w}_i}\left(\frac{\boldsymbol{w}_i}{\Vert\boldsymbol{w}_i\Vert}\right) \nonumber \\
+  & = \frac{1}{\Vert\boldsymbol{w}_i\Vert}\text{I}-\boldsymbol{w}_i\left(\frac{\partial\left(1/\Vert\boldsymbol{w}_i\Vert\right)}{\partial\boldsymbol{w}_i}\right)^T \nonumber \\
+  & = \frac{1}{\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\frac{\boldsymbol{w}_i\boldsymbol{w}_i^T}{\Vert\boldsymbol{w}_i\Vert^2}\right) \nonumber \\
+  & = \frac{1}{\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\boldsymbol{z}_i\boldsymbol{z}_i^T\right)
+  \label{eqn:supp_dz_dx}
+\end{align}
+Combining Eqs. \ref{eqn:supp_supervised_loss_gradient} and \ref{eqn:supp_dz_dx} thus gives:
+\begin{align}
+  \frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i} & = \frac{1}{\tau\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\boldsymbol{z}_i\boldsymbol{z}_i^T\right)\left\{\sum_{p\in P(i)}\boldsymbol{z}_p(P_{ip}-X_{ip})+\sum_{n\in N(i)}\boldsymbol{z}_nP_{in}\right\}\nonumber\\
+  & = \frac{1}{\tau\Vert\boldsymbol{w}_i\Vert}\left\{\sum_{p\in P(i)}(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i)(P_{ip}-X_{ip})+\sum_{n\in N(i)}(\boldsymbol{z}_n-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n)\boldsymbol{z}_i)P_{in}\right\}\nonumber\\
+  & = \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{P(i)}+\left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{N(i)}
+\end{align}
+where:
+\begin{align}
+  \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{P(i)} & =
+  \frac{1}{\tau\Vert\boldsymbol{w}_i\Vert}\sum_{p\in P(i)}(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i)(P_{ip}-X_{ip})\label{eqn:supp_loss_gradient_pos}\\
+  \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{N(i)} & =
+  \frac{1}{\tau\Vert\boldsymbol{w}_i\Vert}\sum_{n\in N(i)}(\boldsymbol{z}_n-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n)\boldsymbol{z}_i)P_{in}\label{eqn:supp_loss_gradient_neg}
+\end{align}
+
+We now show that easy positives and negatives have small gradient contributions while hard positives and negatives have large ones. For an easy positive (i.e., one against which contrasting the anchor only \emph{weakly} benefits the encoder), $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p\approx 1$. Thus (see Eq. \ref{eqn:supp_loss_gradient_pos}):
+\begin{equation}
+  \left\Vert(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i\right\Vert=\sqrt{1-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)^2}\approx 0
+\end{equation}
+However, for a hard positive (i.e., one against which contrasting the anchor \emph{greatly} benefits the encoder), $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p\approx 0$, so:
+\begin{equation}
+  \left\Vert(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i\right\Vert=\sqrt{1-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)^2}\approx 1
+\end{equation}
+Thus, for the gradient of $\mathcal{L}_{in}^{sup}$ (where $X_{ip}=X_{ip}^{in}$):
+\begin{align}
+  & \left\Vert(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i\right\Vert|P_{ip}-X_{ip}^{in}|\nonumber\\
+  & \approx |P_{ip}-X_{ip}^{in}|\nonumber\\
+  & = \left|\frac{1}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)+\sum\limits_{n\in N(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau\right)}-\frac{1}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)}\right|\nonumber\\
+  & \propto \sum_{n\in N(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau\right)
+  \label{eqn:supp_bad_supcon_factor}
+\end{align}
+For the gradient of $\mathcal{L}_{out}^{sup}$ (where $X_{ip}=X_{ip}^{out}$)
+\begin{align}
+  & \left\Vert(\boldsymbol{z}_p-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p)\boldsymbol{z}_i\right\Vert|P_{ip}-X_{ip}^{out}|\nonumber\\
+  & \approx |P_{ip}-X_{ip}^{out}|\nonumber\\
+  & = \left|\frac{1}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}-\frac{1}{|P(i)|}\right|\nonumber\\
+  & = \left|\frac{1}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)+\sum\limits_{n\in N(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau\right)}-\frac{1}{|P(i)|}\right|\nonumber\\
+  & \propto \sum_{n\in N(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau\right)+\sum_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)-|P(i)|
+  \label{eqn:supp_supcon_factor}
+\end{align}
+where $\sum_{n\in N(i)}\text{exp}(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n/\tau)\ge0$ (assuming $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n\le0$) and $\sum_{p'\in P(i)}\text{exp}(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau)-|P(i)|\ge0$ (assuming $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}\ge0$). We thus see that for either $\mathcal{L}_{out}^{sup}$ and $\mathcal{L}_{in}^{sup}$ the gradient response to a hard positive in any individual training step can be made larger by increasing the number of negatives. 
+Additionally, for $\mathcal{L}_{out}^{sup}$, it can also be made larger by increasing the number of positives. 
+
+Thus, for weak positives (since $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p\approx 1$) the contribution to the gradient is small while for hard positives the contribution is large (since $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p \approx 0$). Similarly, analysing Eq. \ref{eqn:supp_loss_gradient_neg} for weak negatives ($\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n\approx -1$) vs hard negatives ($\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n\approx 0$) we conclude that the gradient contribution is large for hard negatives and small for weak negatives.
+
+In addition to an increased number of positives/negatives helping in general, we also note that as we increase the batch size, we also increase the probability of choosing individual \emph{hard} positives/negatives. Since hard positives/negatives lead to a larger gradient contribution, we see that a larger batch has multiple high impact effects to allow obtaining better performance, as we observe empirically in the main paper. %
+
+Additionally, it should be noted that the ability of contrastive losses to perform intrinsic hard positive/negative data mining comes about only if a normalization layer is added to the end of the projection network, thereby justifying the use of a normalization in the network. Ours is the first paper to show analytically this property of contrastive losses, even though normalization has been empirically found to be useful in self-supervised contrastive learning.
+
+\section{Triplet Loss Derivation from Contrastive Loss}
+\label{sec:triplet_loss_derivation}
+
+In this section, we show that the triplet loss \cite{weinberger2009distance} is a special case of the contrastive loss when the number of positives and negatives are each one. Assuming the representation of the anchor ($i$) and the positive ($p$) are more aligned than that of the anchor and negative ($n$) (i.e., $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p\gg\boldsymbol{z}_i\bigcdot\boldsymbol{z}_n$), we have:
+\begin{eqnarray}
+  \mathcal{L}^{self} & = & -\text{log}\frac{\text{exp}\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_p/\tau\right)}{\text{exp}\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_p/\tau\right)+\text{exp}\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_n/\tau\right)} \nonumber \\
+  & = & \text{log}\left(1+\text{exp}\left(\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_n-\boldsymbol{z}_a\bigcdot\boldsymbol{z}_p\right)/\tau\right)\right) \nonumber \\
+  & \approx & \text{exp}\left(\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_n-\boldsymbol{z}_a\bigcdot\boldsymbol{z}_p\right)/\tau\right) ~~~~\text{(Taylor expansion of $\log$)} \nonumber \\
+  & \approx & 1+\frac{1}{\tau}\cdot\left(\boldsymbol{z}_a\bigcdot\boldsymbol{z}_n-\boldsymbol{z}_a\bigcdot\boldsymbol{z}_p\right) \nonumber \\
+  & = & 1-\frac{1}{2\tau}\cdot\left(\left\Vert\boldsymbol{z}_a-\boldsymbol{z}_n\right\Vert^2-\left\Vert\boldsymbol{z}_a-\boldsymbol{z}_p\right\Vert^2\right) \nonumber \\
+  & \propto & \left\Vert\boldsymbol{z}_a-\boldsymbol{z}_p\right\Vert^2-\left\Vert\boldsymbol{z}_a-\boldsymbol{z}_n\right\Vert^2+2\tau \nonumber
+\end{eqnarray}
+which has the same form as a triplet loss with margin $\alpha=2\tau$. This result is consistent with empirical results \cite{chen2020simple} which show that contrastive loss performs better in general than triplet loss on representation tasks. Additionally, whereas triplet loss in practice requires computationally expensive hard negative mining (e.g., \cite{schroff2015facenet}), the discussion in Sec. \ref{sec:hard_mining_properties} shows that the gradients of the supervised contrastive loss naturally impose a measure of hard negative reinforcement during training. This comes at the cost of requiring large batch sizes to include many positives and negatives.
+
+
+
+\section{Supervised Contrastive Loss Hierarchy}
+
+The SupCon loss subsumes multiple other commonly used losses as special cases of itself. It is insightful to study which additional restrictions need to be imposed on it to change its form into that of each of these other losses.
+
+For convenience, we reprint the form of the SupCon loss.
+\begin{equation}
+  \mathcal{L}^{sup}
+  =\sum_{i\in I}\frac{-1}{|P(i)|}\sum_{p\in P(i)}\log{\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}}
+  \label{eqn:supp_supervised_loss}
+\end{equation}
+
+Here, $P(i)$ is the set of all positives in the multiviewed batch corresponding to the anchor $i$. For SupCon, positives can come from two disjoint categories:
+\begin{itemize}
+  \item Views of the \emph{same} sample image which generated the anchor image.
+  \item Views of a sample image \emph{different} from that which generated the anchor image but having the same label as that of the anchor.
+\end{itemize}
+
+The loss for self-supervised contrastive learning (Eq. 1 in the paper) is a special case of SupCon when $P(i)$ is restricted to contain only a view of the \emph{same} source image as that of the anchor (i.e., the first category above). In this case, $P(i)=j(i)$, where $j(i)$ is the index of view, and Eq. \ref{eqn:supp_supervised_loss} readily takes on the self-supervised contrastive loss form.
+\begin{equation}
+  \left.\mathcal{L}^{sup}\right|_{P(i)=j(i)}
+  =\mathcal{L}^{self}
+  =-\sum_{i\in I}\log{
+  \frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{j(i)}/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}
+  }
+  \label{eqn:supp_self_loss}
+\end{equation}
+
+A second commonly referenced loss subsumed by SupCon is the N-Pairs loss \cite{sohn2016improved}. This loss, while functionally similar to Eq. \ref{eqn:supp_self_loss}, differs from it by requiring that the positive be generated from a sample image \emph{different} from that which generated the anchor but which has the same label as the anchor (i.e., the second category above). There is also no notion of temperature in the original N-Pairs loss, though it could be easily generalized to include it. Letting $k(i)$ denote the positive originating from a different sample image than that which generated the anchor $i$, the N-Pairs loss has the following form:
+\begin{equation}
+  \left.\mathcal{L}^{sup}\right|_{P(i)=k(i),\tau=1}
+  =\mathcal{L}^{n{\text -}pairs}
+  =-\sum_{i\in I}\log{
+  \frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{k(i)}\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a\right)}
+  }
+  \label{eqn:supp_npairs_loss}
+\end{equation}
+It is interesting to see how these constraints affect performance. For a batch size of 6144, a ResNet-50 encoder trained on ImageNet with N-Pairs loss achieves an ImageNet Top-1 classification accuracy of 57.4\% while an identical setup trained with the SupCon loss achieves 78.7\%.
+
+Finally, as discussed in Sec. \ref{sec:triplet_loss_derivation}, triplet loss is a special case of the SupCon loss (as well as that of the self-supervised and N-Pairs losses) when the number of positives and negatives are restricted to both be one.
+
+\section{Effect of Temperature in Loss Function}
+
+Similar to previous work \cite{chen2020simple,tian2019contrastive}, we find that the temperature $\tau$ used in the loss function has an important role to play in supervised contrastive learning and that the model trained with the optimal temperature can improve performance by nearly 3\%. Two competing effects that changing the temperature has on training the model are:
+\begin{enumerate}
+    \item {\bf Smoothness:} The distances in the representation space used for training the model have gradients with smaller norm ($||\nabla \mathcal{L}|| \propto \frac{1}{\tau}$); see Section \ref{sec:gradient_derivation}. Smaller magnitude gradients make the optimization problem simpler by allowing for larger learning rates. In Section 3.3 of the paper, it is shown that in the case of a single positive and negative, the contrastive loss is equivalent to a triplet loss with margin $\propto\tau$. Therefore, in these cases, a larger temperature makes the optimization easier, and classes more separated.
+    
+    \item {\bf Hard positives/negatives:} On the other hand, as shown in Sec \ref{sec:hard_mining_properties}, the supervised contrastive loss has structure that cause hard positives/negatives to improve performance. Additionally, hard negatives have been shown to improve classification accuracy when models are trained with the triplet loss \cite{schroff2015facenet}. Low temperatures are equivalent to optimizing for hard positives/negatives: for a given batch of samples and a specific anchor, lowering the temperature relatively increases the value of $P_{ik}$ (see Eq. \ref{eqn:supp_pip}) for samples which have larger inner product with the anchor, and reduces it for samples which have smaller inner product.
+
+\end{enumerate}
+
+We found empirically that a temperature of $0.1$ was optimal for top-1 accuracy on ResNet-50; results on various temperatures are shown in Fig. 4 of the main paper. We use the same temperature for all experiments on ResNet-200. 
+
+
+\input{positives}
+
+
+\section{Robustness}
+Along with measuring the mean Corruption Error (mCE) and mean relative Corruption Error \cite{hendrycks2019benchmarking} on the ImageNet-C dataset (see paper, Section 4.2 and Figure 3), we also measure the Expected Calibration Error and the mean accuracy of our models on different corruption severity levels. Table \ref{tab:severity} demonstrates how performance and calibration degrades as the data shifts farther from the training distribution and becomes harder to classify. Figure \ref{fig:robustness} shows how the calibration error of the model increases as the level of corruption severity increases as measured by performance on ImageNet-C \cite{hendrycks2019benchmarking}.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{p{0.17\textwidth}llccccc}\toprule
+        \multicolumn{2}{c}{Model}&
+        Test & {1} & {2} & {3} & {4} & {5} \\\midrule
+        Loss& Architecture & \multicolumn{6}{c}{ECE}\\\midrule
+        \multirow{2}{0.17\textwidth}{Cross Entropy} & ResNet-50  & 0.039 & 0.033 & 0.032 & 0.047 & 0.072 & 0.098\\
+        & ResNet-200  & 0.045 & 0.048 & 0.036 & 0.040 & 0.042 & 0.052 \\ 
+        \midrule
+        \multirow{2}{0.17\textwidth}{Supervised  Contrastive} & ResNet-50  & 0.024 & 0.026 & 0.034 & 0.048 & 0.071 & 0.100 \\ 
+        & ResNet-200  & 0.041 & 0.047 & 0.061 & 0.071 & 0.086 & 0.103 \\\midrule
+        & & \multicolumn{6}{c}{Top-1 Accuracy}\\\midrule
+        \multirow{2}{0.17\textwidth}{Cross Entropy} & ResNet-50  & 78.24 & 65.06 & 54.96 & 47.64 & 35.93 & 25.38 \\ 
+        & ResNet-200  & 80.81 & 72.89 & 65.28 & 60.55 & 52.00 & 43.11\\
+        \midrule
+        \multirow{2}{0.17\textwidth}{Supervised Contrastive} & ResNet-50  & 78.81 & 65.39 & 55.55 & 48.64 & 37.27 & 26.92 \\
+         & ResNet-200  & 81.38 & 73.29 & 66.16 & 61.80 & 54.01 & 45.71 \\ \bottomrule
+    \end{tabular}
+    \vspace{2mm}
+    \caption{{\bf{Top}}: Average Expected Calibration Error (ECE) over all the corruptions in ImageNet-C \cite{hendrycks2019benchmarking} for a given level of severity (lower is better); {\bf{Bottom}}: Average Top-1 Accuracy over all the corruptions for a given level of severity (higher is better).}
+    \label{tab:severity}
+\end{table}
+
+
+\begin{figure*}  
+    \centering
+    \includegraphics[width=0.45\linewidth]{figs/corrupt_ece.png}
+    \caption{Expected Calibration Error and mean top-1 accuracy at different corruption severities on ImageNet-C, on the ResNet-50 architecture (top) and ResNet-200 architecture (bottom). The contrastive loss maintains a higher accuracy over the range of corruption severities, and does not suffer from increasing calibration error, unlike the cross entropy loss.}
+  \label{fig:robustness}
+\end{figure*}
+
+
+
+
+\section{Two stage training on Cross Entropy}
+To ablate the effect of representation learning and have a two stage evaluation process we also compared against using models trained with cross-entropy loss for representation learning. We do this by first training the model with cross entropy and then re-initializing the final layer of the network randomly. In this second stage of training we again train with cross entropy but keep the weights of the network fixed. Table \ref{table:xenthead} shows that the representations learnt by cross-entropy for a ResNet-50 network are not robust and just the re-initialization of the last layer leads to large drop in accuracy and a mixed result on robustness compared to a single-stage cross-entropy training. Hence both methods of training cross-entropy are inferior to supervised contrastive loss.
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{cccc}\toprule
+         & Accuracy & mCE & rel. mCE  \\\midrule
+        Supervised Contrastive & {\bf 78.7} & {\bf 67.2} & 94.6 \\
+        Cross Entropy (1 stage) & 77.1 & 68.4 & 103.7  \\
+        Cross Entropy (2 stage) & 73.7 & 73.3 & {\bf 92.9} \\\bottomrule
+    \end{tabular}
+    \caption{Comparison between representations learnt using Supervised Contrastive and representations learnt using Cross Entropy loss with either 1 stage of training or 2 stages (representation learning followed by linear classifier).}
+    \label{table:xenthead}
+\end{table}
+
+\section{Training Details}
+In this section we present results for various ablation experiments, disentangling the effects of (a) Optimizer and (b) Data Augmentation on downstream performance.
+\subsection{Optimizer}
+We experiment with various optimizers for the contrastive learning and training the linear classifier in various combinations. We present our results in Table \ref{tab:opt}. The LARS optimizer \cite{you2017large} gives us the best results to train the embedding network, confirming what has been reported by previous work \cite{chen2020simple}. With LARS we use a cosine learning rate decay. On the other hand we find that the RMSProp optimizer \cite{tieleman2012lecture} works best for training the linear classifier. For RMSProp we use an exponential decay for the learning rate. 
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ccc}\toprule
+        {Contrastive Optimizer} & Linear Optimizer & Top-1 Accuracy \\\midrule
+        LARS & LARS & 78.2 \\
+        LARS & RMSProp & 78.7 \\
+        LARS & Momentum & 77.6 \\ 
+        RMSProp & LARS & 77.4 \\
+        RMSProp & RMSProp & 77.8 \\
+        RMSProp & Momentum & 76.9 \\
+        Momentum & LARS & 77.7 \\
+        Momentum & RMSProp & 76.1 \\
+        Momentum & Momentum & 77.7 \\ \bottomrule
+    \end{tabular}
+    \vspace{2mm}
+    \caption{Results of training the ResNet-50 architecture with AutoAugment data augmentation policy for 350 epochs and then training the linear classifier for another 350 epochs. Learning rates were optimized for every optimizer while all other hyper-parameters were kept the same.}
+    \label{tab:opt}
+\end{table}
+
+\subsection{Data Augmentation}
+We experiment with the following data augmentations:
+\begin{itemize}
+    \item {{\bf AutoAugment}: \cite{cubuk2019autoaugment} A two stage augmentation policy which is trained with reinforcement learning for Top-1 Accuracy on ImageNet.}
+    \item {{\bf RandAugment}: \cite{cubuk2019randaugment} A two stage augmentation policy that uses a random parameter in place of parameters tuned by AutoAugment. This parameter needs to be tuned and hence reduces the search space, while giving better results than AutoAugment.}
+    \item {{\bf SimAugment}: \cite{chen2020simple} An augmentation policy which applies random flips, rotations, color jitters followed by Gaussian blur. We also add an additional step where we  warping the image before the Gaussian blur, which gives a further boost in performance.}
+    \item {{\bf Stacked RandAugment}: \cite{tian2020makes} An augmentation policy which is based on RandAugment \cite{cubuk2019randaugment} and SimAugment \cite{chen2020simple}. The strategy involves an additional RandAugment step before doing the color jitter as done in SimAugment. This leads to a more diverse set of images created by the augmentation and hence more robust training which generalizes better. }
+\end{itemize}
+
+and found that AutoAugment \cite{lim2019fast} gave us the highest Top-1 accuracy on ResNet-50 for both the cross entropy loss and supervised contrastive loss. On the other hand Stacked RandAugment \cite{tian2020makes} gives us highest Top-1 accuracy on ResNet-200 for both the cross entropy loss and supervised contrastive Loss. We conjecture this is happens because Stacked RandAugment is a stronger augmentation strategy and hence needs a larger model capacity to generalize well. 
+ 
+We also note that AutoAugment is faster at runtime than other augmentation schemes such as RandAugment \cite{cubuk2019randaugment}, SimAugment \cite{chen2020simple} or StackedRandAugment \cite{tian2020makes} and hence models trained with AutoAugment take lesser time to train. We leave experimenting with MixUp \cite{zhang2017mixup} or CutMix \cite{yun2019cutmix} as future work. 
+
+
+
+\begin{table}[ht]
+    \centering
+    \begin{tabular}{ccc}\toprule
+        Contrastive Augmentation & Linear classifier Augmentation & Accuracy  \\\midrule
+        AutoAugment & AutoAugment & 78.6 \\
+        AutoAugment & RandAugment & 78.1 \\
+        AutoAugment & SimAugment & 75.4 \\
+        AutoAugment & Stacked RandAugment & 77.4 \\\midrule
+        SimAugment & AutoAugment & 76.1 \\ 
+        SimAugment & RandAugment & 75.9 \\
+        SimAugment & SimAugment & 77.9 \\
+        SimAugment & Stacked RandAugment & 76.4 \\\midrule
+        RandAugment & AutoAugment & 78.3 \\ 
+        RandAugment & RandAugment & 78.4 \\ 
+        RandAugment & SimAugment & 76.3 \\
+        RandAugment & Stacked RandAugment & 75.8 \\\midrule
+        Stacked RandAugment & AutoAugment & 78.1 \\
+        Stacked RandAugment & RandAugment & 78.2  \\
+        Stacked RandAugment & SimAugment & 77.9 \\
+        Stacked RandAugment & Stacked RandAugment & 75.9 \\ \bottomrule
+    \end{tabular}
+    \vspace{2mm}
+    \caption{Combinations of different data augmentations for ResNet-50 trained with optimal set of hyper-parameters and optimizers. We observe that stacked RandAugment does consistently worse for all configurations due to lower capacity of ResNet-50 models. We also observe that for other augmentations that we get the best performance by using the same augmentations in both stages of training. }
+    \label{tab:aug}
+\end{table}
+
+
+Further we experiment with varying levels of augmentation magnitude for RandAugment since that has shown to affect performance when training models with cross entropy loss \cite{cubuk2019randaugment}. Fig. \ref{fig:randaug} shows that supervised contrastive methods consistently outperform cross entropy training independent of augmentation magnitude.
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.45\linewidth]{figs/randaug50.png}
+    \includegraphics[width=0.45\linewidth]{figs/randaug200.png}
+    \caption{Top-1 Accuracy vs RandAugment magnitude for ResNet-50 (left) and ResNet-200 (right). We see that supervised contrastive methods consistently outperform cross entropy for varying strengths of augmentation.}
+    \label{fig:randaug} 
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+

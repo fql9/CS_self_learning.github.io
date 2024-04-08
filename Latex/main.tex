@@ -1,0 +1,132 @@
+\documentclass[10pt,letterpaper]{article}
+
+
+\usepackage[nonatbib,final]{neurips_2020}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{bbm}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage[font=small]{caption}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\definecolor{blue}{rgb}{1,0,0}
+
+
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+\input{commands}
+\begin{document}
+
+\title{Supervised Contrastive Learning}
+
+
+{ 
+\author{\small Prannay Khosla \thanks{\scriptsize Equal contribution.} \\
+{\small Google Research}
+% For a paper whose authors are all at the same institution,
+% omit the following lines up until the closing ``}''.
+% Additional authors and addresses can be added with ``\and'',
+% just like the second author.
+% To save space, use either the email address or home page, not both
+\and
+{\small \textbf{Piotr Teterwak} \footnotemark[1]\ \  \thanks{\scriptsize Work done while at Google Research.}}\\
+{\small Boston University} \\
+\and
+{\small \textbf{Chen Wang} \footnotemark[2]} \\
+{\small Snap Inc.} \\
+\and
+{\small \textbf{Aaron Sarna} \thanks{\scriptsize Corresponding author: sarna@google.com}} \\
+{\small Google Research} \\
+\and
+{\small \textbf{Yonglong Tian}} \footnotemark[2]\\
+{\small MIT} \\
+\and
+{\small \textbf{Phillip Isola}} \footnotemark[2]\\ 
+{\small MIT} \\
+\and
+{\small \textbf{Aaron Maschinot}} \\
+{\small Google Research}\\
+\and
+{\small \textbf{Ce Liu}} \\
+{\small Google Research} \\
+\and
+{\small \textbf{Dilip Krishnan}} \\
+{\small Google Research}\\
+}
+}
+
+% { 
+% \author{\small Prannay Khosla \thanks{\scriptsize Equal contribution.}\ \ \thanks{\scriptsize Work done while at Google Research.} \\
+% {\small Google Research}
+% % For a paper whose authors are all at the same institution,
+% % omit the following lines up until the closing ``}''.
+% % Additional authors and addresses can be added with ``\and'',
+% % just like the second author.
+% % To save space, use either the email address or home page, not both
+% \and
+% {\small \textbf{Piotr Teterwak} \footnotemark[1]\ \ \footnotemark[2]}\\
+% {\small Boston University} \\
+% \and
+% {\small \textbf{Chen Wang} \footnotemark[2]} \\
+% {\small Snap Inc.} \\
+% \and
+% {\small \textbf{Aaron Sarna} \thanks{\scriptsize Corresponding author: sarna@google.com}} \\
+% {\small Google Research} \\
+% \and
+% {\small \textbf{Yonglong Tian}} \footnotemark[2]\\
+% {\small MIT} \\
+% \and
+% {\small \textbf{Phillip Isola}} \footnotemark[2]\\ 
+% {\small MIT} \\
+% \and
+% {\small \textbf{Aaron Maschinot}} \\
+% {\small Google Research}\\
+% \and
+% {\small \textbf{Ce Liu}} \\
+% {\small Google Research} \\
+% \and
+% {\small \textbf{Dilip Krishnan}} \\
+% {\small Google Research}\\
+% }
+% }
+
+
+\maketitle
+\input{abstract}
+\input{introduction}
+\input{related}
+\input{method}
+\input{experiments}
+{
+\bibliographystyle{ieee_fullname}
+\bibliography{supcon.bib}
+}
+
+\clearpage
+
+\onecolumn
+\begin{center}
+{\Large\bf{Supplementary}\\
+}
+\end{center}
+
+\maketitle
+\input{supplementary}
+\pagebreak
+\input{changelog}
+
+\end{document}

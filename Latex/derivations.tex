@@ -1,0 +1,117 @@
+\documentclass[10pt,letterpaper]{article}
+
+
+\usepackage[nonatbib]{neurips_2020}
+\usepackage{times}
+\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage[table]{xcolor}
+\usepackage{bbm}
+\usepackage{enumitem}
+\usepackage{subcaption}
+\usepackage{wrapfig}
+\newcommand{\bx}{\mathbf{x}}
+\newcommand{\by}{\mathbf{y}}
+\newcommand{\bz}{\mathbf{z}}
+\definecolor{blue}{rgb}{1,0,0}
+
+
+\usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
+
+\def\httilde{\mbox{\tt\raisebox{-.5ex}{\symbol{126}}}}
+
+
+\input{commands}
+\begin{document}
+
+\title{Connections between supervised contrastive loss, cross entropy loss, label smoothing and noise contrastive loss.}
+
+\maketitle
+
+The connection between contrastive loss, cross entropy loss, label smoothing and noise contrastive estimation: let $z_i$ be the normalized or unnormalized vectors under consideration; in case of the contrastive loss, these might be $128$-dimensional normalized vectors; in the case of cross-entropy the $C$-dimensional ($C$ is number of classes). If labels are given represent the label vector with the letter $y$; thus $y_i$ is a 1-hot vector for sample $i$ with a 1 in the right position for sample $i$. Now the multi-positive, multi-negative contrastive loss that performs well is given by:
+
+\begin{equation}
+L_c = - \sum_i \sum_{p_i} \log \frac{e^{z_i^Tz_{p_i}/\tau}}{e^{z_i^Tz_{p_i}/\tau} + \sum_j e^{z_i^Tz_{n^j_i}/\tau}}
+\label{eqn:conloss}
+\end{equation}
+
+where $p_i$ corresponds to the index of the positive sample associated with $i$; and $n^j_i$ is the $j$'th negative sample for $i$. In contrastive learning, we always assume that $z_{p_i}$ and $z_{n_i}$ are also ``variable" that are associated with the training process. 
+
+Now suppose we consider the following case: single positive; $C-1$ negatives; where the positive and negatives are specific 1-hot vectors: the positive has a single 1 in the position of the class as sample $i$; and the negatives are in the other $C-1$ positions. Then, we can write Eq. \ref{eqn:conloss} as:
+
+\begin{equation}
+L_x = - \sum_i  \log \frac{e^{z_i^Ty_{p_i}/\tau}}{e^{z_i^Ty_{p_i}/\tau} + \sum_j e^{z_i^Ty_{n^j_i}/\tau}}
+\label{eqn:conxent}
+\end{equation}
+
+and we see Eq. \ref{eqn:conxent} can be simplified to the standard cross-entropy loss, by re-writing the above as:
+
+\begin{equation}
+L_{ce} =   - \sum_i  \sum_c \alpha_i^c \log \frac{e^{z_i^c/\tau}}{\sum_{c'} e^{z_i^{c'}/\tau}}
+\label{eqn:celoss}
+\end{equation}
+
+where $\alpha_i^c$ is given by:
+
+\begin{equation}
+\alpha_i^c =
+\begin{cases}
+  1, & \text{if }
+       \!\begin{aligned}[t]
+       c &= C(i)
+       \end{aligned}
+\\
+  0, & \text{otherwise}
+\end{cases}
+\label{eqn:alpha}
+\end{equation}
+
+where $C(i)$ refers to the class for sample $i$; and $z_i^c$ refers to the $c$-th element of vector $z_i$. Thus, cross-entropy with 1-hot vectors can be treated as a specific case of the contrastive loss with specific fixed (1-hot) vectors being used as positives and negatives. Therefore, we can reinterpret MI-based analysis by using this equivalence: the first view of the data is the sample itself; the second view of the data is given by the labels; and we try to maximize MI between the labels and the data. Note that as compared to Eq. \ref{eqn:conloss}, Eq. \ref{eqn:conxent} does not have $l_2$ normalized $z_i$ vectors, but \emph{does} have normalized $y$ vectors (although the 1-hot vector is normalized in any $l_p$ norm; see below). Noise contrastive estimation can be seen as a special case of Eq. \ref{eqn:conxent}, when the number of classes $C=2$, and half the samples are from the data distribution and the other half are ``noise", with data being assigned to class $0$ and noise to class $1$.
+
+Now, let's start from Eq. \ref{eqn:celoss} (label smoothed cross-entropy loss) and  pull the $\alpha_i^c$ back into the $\log$, then we get:
+
+\begin{eqnarray}
+&-& \sum_i  \sum_c \log \left(\frac{e^{z_i^c/\tau}}{\sum_{c'} e^{z_i^{c'}/\tau}}\right)^{\alpha_i^c}  \nonumber \\
+&=& - \sum_i  \sum_c \log \frac{(e^{z_i^c/\tau})^{\alpha_i^c}}{(\sum_{c'} e^{z_i^{c'}/\tau})^{\alpha_i^c}} \nonumber \\
+&\leq& - \sum_i  \sum_c \log \frac{(e^{z_i^c/\tau})^{\alpha_i^c}}{\sum_{c'} (e^{z_i^{c'}/\tau})^{\alpha_i^c}} ~~~\text{\# assuming $\alpha_i^c \leq 1$} \nonumber \\
+&=& - \sum_i  \sum_c \log \frac{e^{z_i^c/{\tau_i^c}}}{\sum_{c'} e^{z_i^{c'}/{\tau_i^{c'}}}} \nonumber \\
+&=& - \sum_i  \sum_c \log \frac{e^{z_i^Ty^c_{p_i}/\tau^c_{p_i}}}{e^{z_i^Ty^c_{p_i}/\tau^c_{p_i}} + \sum_{c'} e^{z_i^Ty^{c'}_{n^j_i}/{\tau_i^{c'}}}}
+\label{eqn:celsloss}
+\end{eqnarray}
+
+where $\tau_i^c = \tau/\alpha_i^c$. Hence label smoothing can be seen upper bounded by a contrastive loss with a special form: per sample/class temperatures in the contrastive loss for the positive and negative samples in the loss; and multiple ($C$) positives for each sample $i$ instead of a single positive. The definition of $\alpha$ in Eq. \ref{eqn:celsloss} can be set to any vector that one may desire; for the case of label smoothing:
+
+\begin{equation}
+\alpha_i^c =
+\begin{cases}
+  \beta_1, & \text{if }
+       \!\begin{aligned}[t]
+       c &= C(i)
+       \end{aligned}
+\\
+  \beta_2, & \text{otherwise}
+\end{cases}
+\label{eqn:alpha}
+\end{equation}
+
+E.g. often $\beta_1 = 0.9$ and $\beta_2 = 0.1/(C - 1)$, so that $\alpha_i$ is still an \emph{$l_1$} normalized vector. 
+
+\begin{enumerate}
+\item What is the ``optimal" form of the contrastive loss given the many choices that come up above: choice of positive and negative vectors; per sample temperature scaling; normalize or unnormalize? How can we analyze these choices? 
+
+\item If one incorporates noise as additional negatives, so that we have noise contrastive and data contrastive terms, then what is the mutual information interpretation?
+
+\item Techniques developed to analyze cross-entropy may be useful for analyzing contrastive, and vice-versa. 
+
+\end{enumerate}
+
+
+
+
+\end{document}

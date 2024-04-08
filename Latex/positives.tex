@@ -1,0 +1,15 @@
+\section{Effect of Number of Positives} 
+\begin{wraptable}{r}{0.5\textwidth}
+    \small
+    \vspace{-15mm}
+    \centering
+    \begin{tabular}{cccccc}
+    \toprule
+     1 \cite{chen2020simple} & 3 & 5 & 7 & 9 & No cap (13) \\\midrule
+    69.3 & 76.6 & 78.0 & 78.4 & 78.3 & 78.5 \\\bottomrule
+    \end{tabular}    %
+    \caption{Comparison of Top-1 accuracy variability as a function of the maximum number of positives $|P(i)|$  varies from 1 to no cap . Adding more positives benefits the final Top-1 accuracy. Note that with 1 positive, this is equivalent to the self-supervised approach of \cite{chen2020simple} where the positive is an augmented version of the \emph{same sample}. }
+    \label{tab:pos_ablation}
+\end{wraptable}
+
+We run ablations to test the effect of the number of positives. Specifically, we take at most $k$ positives for each sample, and also remove them from the denominator of the loss function so they are not considered as a negative. We train with a batch size of 6144, so without this capping there are 13 positives in expectation(6 positives, each with 2 augmentatioins, plus other augmentation of anchor image). We train for 350 epochs. Table \ref{tab:pos_ablation} shows the steady benefit of adding more positives for a ResNet-50 model trained on ImageNet with supervised contrastive loss.  Note that for each anchor, the number of positives always contains one positive which is the same sample but with a different data augmentation; and the remainder of the positives are different samples from the same class. Under this definition, self-supervised learning is considered as having $1$ positive.

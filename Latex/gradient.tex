@@ -1,0 +1,65 @@
+\section{Derivation of Supervised Contrastive Learning Gradient}
+\label{sec:gradient_derivation}
+In Sec 2 in the main paper, we presented motivation based on the functional form of the gradient of the supervised contrastive loss, $\mathcal{L}_i^{sup}(\boldsymbol{z}_i)$ (Eq. 4 in the paper), that the supervised contrastive loss intrinsically causes learning to focus on \emph{hard} positives and negatives, where the encoder can greatly benefit, instead of easy ones, where the encoder can only minimally benefit. In this section, we derive the mathematical expression for the gradient:
+\begin{equation}
+  \frac{\partial\mathcal{L}_i^{sup}(\boldsymbol{z}_i)}{\partial\boldsymbol{w}_i}=\frac{\partial\boldsymbol{z}_i}{\partial\boldsymbol{w}_i}\cdot\frac{\partial\mathcal{L}_i^{sup}(\boldsymbol{z}_i)}{\partial\boldsymbol{z}_i} \label{gradient_chain_ruile}
+\end{equation}
+where $\boldsymbol{w}_i$ is the projection network output \emph{prior} to normalization, i.e., $\boldsymbol{z}_i=\boldsymbol{w}_i/\Vert\boldsymbol{w}_i\Vert$. As we will show, normalizing the representations provides structure to the gradient that causes learning to focus on hard positives and negatives instead of easy ones.
+
+The supervised contrastive loss can be rewritten as:
+\begin{eqnarray}
+  \mathcal{L}_i^{sup}(\boldsymbol{z}_i) & = & \frac{-1}{2N_{\boldsymbol{\tilde{y}}_i}-1}\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot\log{\frac{\exp{\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j/\tau\right)}}{\sum_{k=1}^{2N}\mathbbm{1}_{i\neq k}\cdot\exp{\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k/\tau\right)}}}\nonumber\\
+  & = & \frac{-1}{2N_{\boldsymbol{\tilde{y}}_i}-1}
+  \sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot\left(\frac{\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j}{\tau}-\log{\sum_{k=1}^{2N}\mathbbm{1}_{i\neq k}\cdot\exp{\frac{\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k}{\tau}}}\right)\nonumber
+\end{eqnarray}
+Thus:
+\begin{eqnarray}
+  \frac{\partial\mathcal{L}_i^{sup}(\boldsymbol{z}_i)}{\partial\boldsymbol{z}_i} & = & \frac{-1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \left(
+    \boldsymbol{z}_j
+    -\sum_{k=1}^{2N}\frac{\mathbbm{1}_{i\neq k}\cdot\boldsymbol{z}_k\cdot\exp{(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k/\tau)}}{\sum_{m=1}^{2N}\mathbbm{1}_{i\neq m}\cdot\exp{(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_m/\tau)}}
+  \right) \nonumber \\
+  & = & \frac{-1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \left(
+    \boldsymbol{z}_j-\sum_{k=1}^{2N}\mathbbm{1}_{i\neq k}\cdot\boldsymbol{z}_k\cdot P_{ik}
+  \right) \nonumber \\
+  & = & \frac{-1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \left(
+    (1-P_{ij})\cdot\boldsymbol{z}_j-\sum_{k=1}^{2N}\mathbbm{1}_{k\notin\{i,j\}}\cdot\boldsymbol{z}_k\cdot P_{ik}
+  \right) \label{eq:dloss_dz}
+\end{eqnarray}
+where we have defined $P_{i\ell}$ as follows:
+\begin{equation}
+P_{i\ell}=\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_\ell/\tau\right)}{\sum_{k=1}^{2N}\mathbbm{1}_{i\neq k}\cdot\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_\ell/\tau\right)}\ \ \ ,\ \ \ i,\ell\in\{1...2N\}\ ,\ i\neq\ell \nonumber
+\end{equation}
+$P_{i\ell}$ is the $\ell$'th component of the temperature-scaled softmax distribution of inner products of representations with respect to anchor $i$ and is thus interpretable as a probability. Note that, were we \emph{not} to normalize the projection network output representations, then Eq. \ref{eq:dloss_dz} would effectively be the gradient used for learning (simply let $\boldsymbol{z}_i$ denote a non-normalized vector). It will be insightful to contrast Eq. \ref{eq:dloss_dz} with the form for the projection network gradient (derived below) in which output representations \emph{are} normalized.
+
+The fact that we are using \emph{normalized} projection network output representations introduces an additional term in Eq. \ref{gradient_chain_ruile}, namely $\partial\boldsymbol{z}_i/\partial\boldsymbol{w}_i$, which has the following form:
+\begin{eqnarray}
+  \frac{\partial\boldsymbol{z}_i}{\partial\boldsymbol{w}_i} & = & \frac{\partial}{\partial\boldsymbol{w}_i}\left(\frac{\boldsymbol{w}_i}{\Vert\boldsymbol{w}_i\Vert}\right) \nonumber \\
+  & = & \frac{1}{\Vert\boldsymbol{w}_i\Vert}\cdot\text{I}-\boldsymbol{w}_i\cdot\left(\frac{\partial\left(1/\Vert\boldsymbol{w}_i\Vert\right)}{\partial\boldsymbol{w}_i}\right)^T \nonumber \\
+  & = & \frac{1}{\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\frac{\boldsymbol{w}_i\cdot\boldsymbol{w}_i^T}{\Vert\boldsymbol{w}_i\Vert^2}\right) \nonumber \\
+  & = & \frac{1}{\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\boldsymbol{z}_i\cdot\boldsymbol{z}_i^T\right) \label{dz_dx}
+\end{eqnarray}
+where I is the identity matrix. Substituting Eqs. \ref{eq:dloss_dz} and \ref{dz_dx} into Eq. \ref{gradient_chain_ruile} gives the following expression for the gradient wrt the \emph{normalized} projection network output representations:
+\begin{eqnarray}
+  \frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i} & = & \frac{-1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau}\cdot\frac{1}{\Vert\boldsymbol{w}_i\Vert}\left(\text{I}-\boldsymbol{z}_i\cdot\boldsymbol{z}_i^T\right)\nonumber\\
+  & & \cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \left(
+    (1-P_{ij})\cdot\boldsymbol{z}_j-\sum_{k=1}^{2N}\mathbbm{1}_{k\notin\{i,j\}}\cdot\boldsymbol{z}_k\cdot P_{ik}
+  \right) \nonumber \\
+  & = & \frac{1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau\cdot\Vert\boldsymbol{w}_i\Vert}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  ((\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j)\cdot\boldsymbol{z}_j-\boldsymbol{z}_j)(1-P_{ij}) \nonumber \\
+  & & + \frac{1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau\cdot\Vert\boldsymbol{w}_i\Vert}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \sum_{k=1}^{2N}\mathbbm{1}_{k\notin\{i,j\}}\cdot(\boldsymbol{z}_k-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k)\cdot\boldsymbol{z}_k)\cdot P_{ik} \nonumber \\
+  & = & \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{pos}+\left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{neg} \nonumber
+\end{eqnarray}
+where:
+\begin{eqnarray}
+  \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{pos} & = & \frac{1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau\cdot\Vert\boldsymbol{w}_i\Vert}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  ((\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j)\cdot\boldsymbol{z}_j-\boldsymbol{z}_j)(1-P_{ij}) \nonumber \\
+  \left.\frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{w}_i}\right\vert_\text{neg} & = & \frac{1}{(2N_{\boldsymbol{\tilde{y}}_i}-1)\cdot\tau\cdot\Vert\boldsymbol{w}_i\Vert}\cdot\sum_{j=1}^{2N}\mathbbm{1}_{i\neq j}\cdot\mathbbm{1}_{\boldsymbol{\tilde{y}}_i=\boldsymbol{\tilde{y}}_j}\cdot
+  \sum_{k=1}^{2N}\mathbbm{1}_{k\notin\{i,j\}}\cdot(\boldsymbol{z}_k-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k)\cdot\boldsymbol{z}_k)\cdot P_{ik} \nonumber
+\end{eqnarray}
+
+As discussed in detail in the main paper, for hard positives (i.e., $\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j\approx0$), the $((\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j)\cdot\boldsymbol{z}_j-\boldsymbol{z}_j)(1-P_{ij})$ structure present in $\left.\partial\mathcal{L}_i^{sup}/\partial\boldsymbol{w}_i\right\vert_\text{pos}$ results in large gradients while for easy positives ($\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j\approx1$), it results in small gradients. Analogously, for hard negatives ($\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j\approx0$), the $(\boldsymbol{z}_k-(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_k)\cdot\boldsymbol{z}_k)\cdot P_{ik}$ structure present in $\left.\partial\mathcal{L}_i^{sup}/\partial\boldsymbol{w}_i\right\vert_\text{neg}$ results in large gradients while for easy negatives ($\boldsymbol{z}_i\bigcdot\boldsymbol{z}_j\approx-1$), it results in small gradients. Comparing $\left.\partial\mathcal{L}_i^{sup}/\partial\boldsymbol{w}_i\right\vert_\text{pos}$ and $\left.\partial\mathcal{L}_i^{sup}/\partial\boldsymbol{w}_i\right\vert_\text{neg}$ to that of Eq. \ref{eq:dloss_dz}, one can see that normalizing the projection network output representations served to introduce the general $((\boldsymbol{z}_i\bigcdot\boldsymbol{z}_\ell)\cdot\boldsymbol{z}_{\ell}-\boldsymbol{z}_{\ell})$ structure, which plays a key role in ensuring the gradients are large for hard positives and negatives.

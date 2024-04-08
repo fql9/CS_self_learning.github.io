@@ -1,0 +1,133 @@
+\backcite {cubuk2019autoaugment}{{1}{1}{figure.caption.2}}
+\backcite {cubuk2019randaugment}{{1}{1}{figure.caption.2}}
+\backcite {yun2019cutmix}{{1}{1}{figure.caption.2}}
+\backcite {zhang2018generalized,sukhbaatar2014training}{{1}{1}{figure.caption.3}}
+\backcite {elsayed2018large,liu2016large}{{1}{1}{figure.caption.3}}
+\backcite {deng2009imagenet}{{1}{1}{figure.caption.3}}
+\backcite {cubuk2019autoaugment,cubuk2019randaugment,xie2019self,kolesnikov2019large}{{2}{1}{figure.caption.3}}
+\backcite {wu2018unsupervised,henaff2019data,oord2018representation,tian2019contrastive,hjelm2018learning,chen2020simple,he2019momentum}{{2}{1}{figure.caption.3}}
+\backcite {oord2018representation,tian2019contrastive}{{2}{1}{figure.caption.3}}
+\backcite {weinberger2009distance}{{2}{1}{figure.caption.3}}
+\backcite {sohn2016improved}{{2}{1}{figure.caption.3}}
+\backcite {he2016deep}{{2}{1}{figure.caption.3}}
+\backcite {cubuk2019autoaugment}{{2}{1}{figure.caption.3}}
+\backcite {lim2019fast}{{2}{1}{figure.caption.3}}
+\backcite {hendrycks2019benchmarking}{{3}{1}{figure.caption.3}}
+\backcite {rumelhart1986learning,baum1988supervised,levin1988accelerated}{{3}{2}{section.2}}
+\backcite {yang2015deep}{{3}{2}{section.2}}
+\backcite {zhang2018generalized,sukhbaatar2014training}{{3}{2}{section.2}}
+\backcite {elsayed2018large,nar2019cross}{{3}{2}{section.2}}
+\backcite {cao2019learning}{{3}{2}{section.2}}
+\backcite {szegedy2016rethinking,muller2019does}{{3}{2}{section.2}}
+\backcite {zhang2017mixup}{{3}{2}{section.2}}
+\backcite {yun2019cutmix}{{3}{2}{section.2}}
+\backcite {hinton2015distilling}{{3}{2}{section.2}}
+\backcite {devlin2018bert,yang2019xlnet,mikolov2013distributed}{{3}{2}{section.2}}
+\backcite {doersch2015unsupervised,zhang2016colorful,zhang2017split,noroozi2016unsupervised}{{3}{2}{section.2}}
+\backcite {wu2018unsupervised,henaff2019data,hjelm2018learning,tian2019contrastive,sermanet2017time,chen2020simple,tschannen2019mutual}{{3}{2}{section.2}}
+\backcite {gutmann2010noise,mnih2013learning}{{3}{2}{section.2}}
+\backcite {sohn2016improved}{{3}{2}{section.2}}
+\backcite {he2019momentum}{{3}{2}{section.2}}
+\backcite {chopra2005learning,weinberger2009distance,schroff2015facenet}{{3}{2}{section.2}}
+\backcite {schroff2015facenet}{{3}{2}{section.2}}
+\backcite {henaff2019data,hjelm2018learning,tian2019contrastive}{{3}{2}{section.2}}
+\backcite {chen2020simple}{{3}{2}{section.2}}
+\backcite {salakhutdinov2007learning}{{3}{2}{section.2}}
+\backcite {wu2018improving}{{3}{2}{section.2}}
+\backcite {wu2018improving}{{3}{2}{section.2}}
+\backcite {salakhutdinov2007learning}{{3}{2}{section.2}}
+\backcite {wu2018improving}{{3}{2}{section.2}}
+\backcite {frosst2019analyzing}{{4}{2}{section.2}}
+\backcite {Kamnitsas2018SemiSupervisedLV}{{4}{2}{section.2}}
+\backcite {tian2019contrastive,chen2020simple}{{4}{3}{section.3}}
+\backcite {schroff2015facenet,wang2020understanding}{{4}{3.1}{subsection.3.1}}
+\backcite {hastie2001statisticallearning}{{4}{3.1}{subsection.3.1}}
+\backcite {tian2019contrastive,chen2020simple}{{4}{3.1}{subsection.3.1}}
+\backcite {chen2020simple,tian2019contrastive,henaff2019data,hjelm2018learning}{{5}{3.2.1}{subsubsection.3.2.1}}
+\backcite {gutmann2010noise,sohn2016improved}{{5}{3.2.2}{equation.3.3}}
+\backcite {henaff2019data,he2019momentum,tian2019contrastive,chen2020simple}{{5}{3.2.2}{equation.3.3}}
+\backcite {schroff2015facenet}{{6}{3.2.2}{equation.3.3}}
+\backcite {jensen1906sur}{{6}{3.2.2}{table.caption.4}}
+\backcite {deng2009imagenet}{{6}{3.2.2}{table.caption.4}}
+\backcite {he2016deep}{{6}{3.2.2}{table.caption.4}}
+\backcite {weinberger2009distance}{{6}{3.2.3}{subsubsection.3.2.3}}
+\backcite {sohn2016improved}{{6}{3.2.3}{subsubsection.3.2.3}}
+\backcite {chen2020simple}{{7}{\caption@xref {??}{ on input line 22}}{table.caption.5}}
+\backcite {liu2016largemargin}{{7}{\caption@xref {??}{ on input line 22}}{table.caption.5}}
+\backcite {he2016deep}{{7}{2}{table.caption.5}}
+\backcite {chen2020simple}{{7}{2}{table.caption.5}}
+\backcite {liu2016largemargin}{{7}{2}{table.caption.5}}
+\backcite {krizhevsky2009learning}{{7}{4}{section.4}}
+\backcite {deng2009imagenet}{{7}{4}{section.4}}
+\backcite {hendrycks2019benchmarking}{{7}{4}{section.4}}
+\backcite {he2016deep}{{7}{4}{section.4}}
+\backcite {cubuk2019autoaugment}{{7}{4}{section.4}}
+\backcite {cubuk2019randaugment}{{7}{4}{section.4}}
+\backcite {chen2020simple}{{7}{4}{section.4}}
+\backcite {tian2020makes}{{7}{4}{section.4}}
+\backcite {he2016deep}{{7}{4.1}{subsection.4.1}}
+\backcite {yun2019cutmix}{{7}{4.1}{subsection.4.1}}
+\backcite {yun2019cutmix}{{7}{4.1}{subsection.4.1}}
+\backcite {zhang2017mixup}{{7}{4.1}{subsection.4.1}}
+\backcite {he2019momentum}{{7}{4.1}{subsection.4.1}}
+\backcite {sohn2016improved}{{7}{4.1}{subsection.4.1}}
+\backcite {sohn2016improved}{{7}{4.1}{subsection.4.1}}
+\backcite {zhang2017mixup}{{8}{\caption@xref {??}{ on input line 41}}{table.caption.6}}
+\backcite {yun2019cutmix}{{8}{\caption@xref {??}{ on input line 42}}{table.caption.6}}
+\backcite {cubuk2019autoaugment}{{8}{\caption@xref {??}{ on input line 43}}{table.caption.6}}
+\backcite {lim2019fast}{{8}{\caption@xref {??}{ on input line 44}}{table.caption.6}}
+\backcite {cubuk2019autoaugment}{{8}{\caption@xref {??}{ on input line 45}}{table.caption.6}}
+\backcite {cubuk2019autoaugment}{{8}{\caption@xref {??}{ on input line 47}}{table.caption.6}}
+\backcite {tian2020makes}{{8}{\caption@xref {??}{ on input line 48}}{table.caption.6}}
+\backcite {tian2020makes}{{8}{\caption@xref {??}{ on input line 49}}{table.caption.6}}
+\backcite {tian2020makes}{{8}{\caption@xref {??}{ on input line 51}}{table.caption.6}}
+\backcite {cubuk2019autoaugment}{{8}{3}{table.caption.6}}
+\backcite {tian2020makes}{{8}{3}{table.caption.6}}
+\backcite {krizhevsky2012imagenet}{{8}{\caption@xref {??}{ on input line 72}}{figure.caption.7}}
+\backcite {Simonyan15}{{8}{\caption@xref {??}{ on input line 73}}{figure.caption.7}}
+\backcite {he2016deep}{{8}{\caption@xref {??}{ on input line 74}}{figure.caption.7}}
+\backcite {hendrycks2019benchmarking}{{8}{3}{figure.caption.7}}
+\backcite {hendrycks2019benchmarking}{{8}{4.2}{subsection.4.2}}
+\backcite {hendrycks2019benchmarking}{{8}{4.2}{subsection.4.2}}
+\backcite {chen2020simple}{{9}{\caption@xref {??}{ on input line 130}}{table.caption.9}}
+\backcite {pascal-voc-2007}{{9}{4}{table.caption.9}}
+\backcite {cubuk2019randaugment}{{9}{4.3}{subsection.4.3}}
+\backcite {cubuk2019autoaugment}{{9}{4.3}{subsection.4.3}}
+\backcite {chen2020simple}{{9}{4.3}{subsection.4.3}}
+\backcite {tian2020makes}{{9}{4.3}{subsection.4.3}}
+\backcite {chen2020simple}{{9}{4.4}{subsection.4.4}}
+\backcite {he2019rethinking}{{9}{4.4}{subsection.4.4}}
+\backcite {kornblith2019better}{{9}{4.4}{subsection.4.4}}
+\backcite {you2017large}{{10}{4.5}{subsection.4.5}}
+\backcite {hinton2012neural}{{10}{4.5}{subsection.4.5}}
+\backcite {ruder2016overview}{{10}{4.5}{subsection.4.5}}
+\backcite {wu2018unsupervised}{{14}{5}{section.5}}
+\backcite {chen2020simple}{{17}{4}{Hfootnote.2}}
+\backcite {weinberger2009distance}{{18}{8}{section.8}}
+\backcite {chen2020simple}{{19}{8}{equation.8.25}}
+\backcite {schroff2015facenet}{{19}{8}{equation.8.25}}
+\backcite {sohn2016improved}{{19}{9}{equation.9.26}}
+\backcite {chen2020simple,tian2019contrastive}{{20}{10}{section.10}}
+\backcite {schroff2015facenet}{{20}{2}{Item.6}}
+\backcite {chen2020simple}{{20}{\caption@xref {??}{ on input line 8}}{table.caption.12}}
+\backcite {chen2020simple}{{20}{5}{table.caption.12}}
+\backcite {hendrycks2019benchmarking}{{20}{12}{section.12}}
+\backcite {hendrycks2019benchmarking}{{21}{12}{section.12}}
+\backcite {hendrycks2019benchmarking}{{21}{6}{table.caption.13}}
+\backcite {you2017large}{{22}{14.1}{subsection.14.1}}
+\backcite {chen2020simple}{{22}{14.1}{subsection.14.1}}
+\backcite {tieleman2012lecture}{{22}{14.1}{subsection.14.1}}
+\backcite {cubuk2019autoaugment}{{22}{14.2}{subsection.14.2}}
+\backcite {cubuk2019randaugment}{{22}{14.2}{subsection.14.2}}
+\backcite {chen2020simple}{{22}{14.2}{subsection.14.2}}
+\backcite {tian2020makes}{{22}{14.2}{subsection.14.2}}
+\backcite {cubuk2019randaugment}{{22}{14.2}{subsection.14.2}}
+\backcite {chen2020simple}{{22}{14.2}{subsection.14.2}}
+\backcite {lim2019fast}{{22}{14.2}{subsection.14.2}}
+\backcite {tian2020makes}{{22}{14.2}{subsection.14.2}}
+\backcite {cubuk2019randaugment}{{23}{14.2}{subsection.14.2}}
+\backcite {chen2020simple}{{23}{14.2}{subsection.14.2}}
+\backcite {tian2020makes}{{23}{14.2}{subsection.14.2}}
+\backcite {zhang2017mixup}{{23}{14.2}{subsection.14.2}}
+\backcite {yun2019cutmix}{{23}{14.2}{subsection.14.2}}
+\backcite {cubuk2019randaugment}{{23}{14.2}{table.caption.17}}

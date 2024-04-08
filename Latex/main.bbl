@@ -1,0 +1,393 @@
+\begin{thebibliography}{10}\itemsep=-1pt
+
+\bibitem{baum1988supervised}
+Eric~B Baum and Frank Wilczek.
+\newblock Supervised learning of probability distributions by neural networks.
+\newblock In {\em Neural information processing systems}, pages 52--61, 1988.
+
+\bibitem{cao2019learning}
+Kaidi Cao, Colin Wei, Adrien Gaidon, Nikos Arechiga, and Tengyu Ma.
+\newblock Learning imbalanced datasets with label-distribution-aware margin
+  loss.
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  1565--1576, 2019.
+
+\bibitem{chen2020simple}
+Ting Chen, Simon Kornblith, Mohammad Norouzi, and Geoffrey Hinton.
+\newblock A simple framework for contrastive learning of visual
+  representations.
+\newblock {\em arXiv preprint arXiv:2002.05709}, 2020.
+
+\bibitem{chopra2005learning}
+Sumit Chopra, Raia Hadsell, and Yann LeCun.
+\newblock Learning a similarity metric discriminatively, with application to
+  face verification.
+\newblock In {\em 2005 IEEE Computer Society Conference on Computer Vision and
+  Pattern Recognition (CVPR'05)}, volume~1, pages 539--546. IEEE, 2005.
+
+\bibitem{cubuk2019autoaugment}
+Ekin~D Cubuk, Barret Zoph, Dandelion Mane, Vijay Vasudevan, and Quoc~V Le.
+\newblock Autoaugment: Learning augmentation strategies from data.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 113--123, 2019.
+
+\bibitem{cubuk2019randaugment}
+Ekin~D Cubuk, Barret Zoph, Jonathon Shlens, and Quoc~V Le.
+\newblock Randaugment: Practical data augmentation with no separate search.
+\newblock {\em arXiv preprint arXiv:1909.13719}, 2019.
+
+\bibitem{deng2009imagenet}
+Jia Deng, Wei Dong, Richard Socher, Li-Jia Li, Kai Li, and Li Fei-Fei.
+\newblock Imagenet: A large-scale hierarchical image database.
+\newblock In {\em 2009 IEEE conference on computer vision and pattern
+  recognition}, 2009.
+
+\bibitem{devlin2018bert}
+Jacob Devlin, Ming-Wei Chang, Kenton Lee, and Kristina Toutanova.
+\newblock Bert: Pre-training of deep bidirectional transformers for language
+  understanding.
+\newblock {\em arXiv preprint arXiv:1810.04805}, 2018.
+
+\bibitem{doersch2015unsupervised}
+Carl Doersch, Abhinav Gupta, and Alexei~A Efros.
+\newblock Unsupervised visual representation learning by context prediction.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 1422--1430, 2015.
+
+\bibitem{elsayed2018large}
+Gamaleldin Elsayed, Dilip Krishnan, Hossein Mobahi, Kevin Regan, and Samy
+  Bengio.
+\newblock Large margin deep networks for classification.
+\newblock In {\em Advances in neural information processing systems}, pages
+  842--852, 2018.
+
+\bibitem{pascal-voc-2007}
+M. Everingham, L. Van~Gool, C.~K.~I. Williams, J. Winn, and A. Zisserman.
+\newblock The {PASCAL} {V}isual {O}bject {C}lasses {C}hallenge 2007 {(VOC2007)}
+  {R}esults.
+\newblock
+  http://www.pascal-network.org/challenges/VOC/voc2007/workshop/index.html.
+
+\bibitem{frosst2019analyzing}
+Nicholas Frosst, Nicolas Papernot, and Geoffrey~E. Hinton.
+\newblock Analyzing and improving representations with the soft nearest
+  neighbor loss.
+\newblock In Kamalika Chaudhuri and Ruslan Salakhutdinov, editors, {\em
+  Proceedings of the 36th International Conference on Machine Learning, {ICML}
+  2019, 9-15 June 2019, Long Beach, California, {USA}}, volume~97 of {\em
+  Proceedings of Machine Learning Research}, pages 2012--2020. {PMLR}, 2019.
+
+\bibitem{gutmann2010noise}
+Michael Gutmann and Aapo Hyv{\"a}rinen.
+\newblock Noise-contrastive estimation: A new estimation principle for
+  unnormalized statistical models.
+\newblock In {\em Proceedings of the Thirteenth International Conference on
+  Artificial Intelligence and Statistics}, pages 297--304, 2010.
+
+\bibitem{hastie2001statisticallearning}
+Trevor Hastie, Robert Tibshirani, and Jerome Friedman.
+\newblock {\em The Elements of Statistical Learning}.
+\newblock Springer Series in Statistics. Springer New York Inc., New York, NY,
+  USA, 2001.
+
+\bibitem{he2019momentum}
+Kaiming He, Haoqi Fan, Yuxin Wu, Saining Xie, and Ross Girshick.
+\newblock Momentum contrast for unsupervised visual representation learning.
+\newblock {\em arXiv preprint arXiv:1911.05722}, 2019.
+
+\bibitem{he2019rethinking}
+Kaiming He, Ross Girshick, and Piotr Doll{\'a}r.
+\newblock Rethinking imagenet pre-training.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 4918--4927, 2019.
+
+\bibitem{he2016deep}
+Kaiming He, Xiangyu Zhang, Shaoqing Ren, and Jian Sun.
+\newblock Deep residual learning for image recognition.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 770--778, 2016.
+
+\bibitem{henaff2019data}
+Olivier~J H{\'e}naff, Ali Razavi, Carl Doersch, SM Eslami, and Aaron van~den
+  Oord.
+\newblock Data-efficient image recognition with contrastive predictive coding.
+\newblock {\em arXiv preprint arXiv:1905.09272}, 2019.
+
+\bibitem{hendrycks2019benchmarking}
+Dan Hendrycks and Thomas Dietterich.
+\newblock Benchmarking neural network robustness to common corruptions and
+  perturbations.
+\newblock {\em arXiv preprint arXiv:1903.12261}, 2019.
+
+\bibitem{hinton2012neural}
+Geoffrey Hinton, Nitish Srivastava, and Kevin Swersky.
+\newblock Neural networks for machine learning lecture 6a overview of
+  mini-batch gradient descent.
+\newblock {\em Cited on}, 14(8), 2012.
+
+\bibitem{hinton2015distilling}
+Geoffrey Hinton, Oriol Vinyals, and Jeff Dean.
+\newblock Distilling the knowledge in a neural network.
+\newblock {\em arXiv preprint arXiv:1503.02531}, 2015.
+
+\bibitem{hjelm2018learning}
+R~Devon Hjelm, Alex Fedorov, Samuel Lavoie-Marchildon, Karan Grewal, Adam
+  Trischler, and Yoshua Bengio.
+\newblock Learning deep representations by mutual information estimation and
+  maximization.
+\newblock In {\em International Conference on Learning Representations}, 2019.
+
+\bibitem{jensen1906sur}
+J.~L. W.~V. Jensen.
+\newblock Sur les fonctions convexes et les in´egalit´es entre les valeurs
+  moyennes.
+\newblock {\em Acta Math}, 1906.
+
+\bibitem{Kamnitsas2018SemiSupervisedLV}
+Konstantinos Kamnitsas, Daniel~C. Castro, Lo{\"i}c~Le Folgoc, Ian Walker,
+  Ryutaro Tanno, Daniel Rueckert, Ben Glocker, Antonio Criminisi, and Aditya~V.
+  Nori.
+\newblock Semi-supervised learning via compact latent space clustering.
+\newblock In {\em International Conference on Machine Learning}, 2018.
+
+\bibitem{kolesnikov2019large}
+Alexander Kolesnikov, Lucas Beyer, Xiaohua Zhai, Joan Puigcerver, Jessica Yung,
+  Sylvain Gelly, and Neil Houlsby.
+\newblock Large scale learning of general visual representations for transfer.
+\newblock {\em arXiv preprint arXiv:1912.11370}, 2019.
+
+\bibitem{kornblith2019better}
+Simon Kornblith, Jonathon Shlens, and Quoc~V Le.
+\newblock Do better imagenet models transfer better?
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 2661--2671, 2019.
+
+\bibitem{krizhevsky2009learning}
+Alex Krizhevsky, Geoffrey Hinton, et~al.
+\newblock Learning multiple layers of features from tiny images.
+\newblock 2009.
+
+\bibitem{krizhevsky2012imagenet}
+Alex Krizhevsky, Ilya Sutskever, and Geoffrey~E Hinton.
+\newblock Imagenet classification with deep convolutional neural networks.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1097--1105, 2012.
+
+\bibitem{levin1988accelerated}
+Esther Levin and Michael Fleisher.
+\newblock Accelerated learning in layered neural networks.
+\newblock {\em Complex systems}, 2:625--640, 1988.
+
+\bibitem{lim2019fast}
+Sungbin Lim, Ildoo Kim, Taesup Kim, Chiheon Kim, and Sungwoong Kim.
+\newblock Fast autoaugment.
+\newblock {\em arXiv preprint arXiv:1905.00397}, 2019.
+
+\bibitem{liu2016large}
+Weiyang Liu, Yandong Wen, Zhiding Yu, and Meng Yang.
+\newblock Large-margin softmax loss for convolutional neural networks.
+\newblock In {\em ICML}, volume~2, page~7, 2016.
+
+\bibitem{liu2016largemargin}
+Weiyang Liu, Yandong Wen, Zhiding Yu, and Meng Yang.
+\newblock Large-margin softmax loss for convolutional neural networks, 2016.
+
+\bibitem{mikolov2013distributed}
+Tomas Mikolov, Ilya Sutskever, Kai Chen, Greg~S Corrado, and Jeff Dean.
+\newblock Distributed representations of words and phrases and their
+  compositionality.
+\newblock In {\em Advances in neural information processing systems}, pages
+  3111--3119, 2013.
+
+\bibitem{mnih2013learning}
+Andriy Mnih and Koray Kavukcuoglu.
+\newblock Learning word embeddings efficiently with noise-contrastive
+  estimation.
+\newblock In {\em Advances in neural information processing systems}, pages
+  2265--2273, 2013.
+
+\bibitem{muller2019does}
+Rafael M{\"u}ller, Simon Kornblith, and Geoffrey~E Hinton.
+\newblock When does label smoothing help?
+\newblock In {\em Advances in Neural Information Processing Systems}, pages
+  4696--4705, 2019.
+
+\bibitem{nar2019cross}
+Kamil Nar, Orhan Ocal, S~Shankar Sastry, and Kannan Ramchandran.
+\newblock Cross-entropy loss and low-rank features have responsibility for
+  adversarial examples.
+\newblock {\em arXiv preprint arXiv:1901.08360}, 2019.
+
+\bibitem{noroozi2016unsupervised}
+Mehdi Noroozi and Paolo Favaro.
+\newblock Unsupervised learning of visual representations by solving jigsaw
+  puzzles.
+\newblock In {\em European Conference on Computer Vision}, pages 69--84.
+  Springer, 2016.
+
+\bibitem{oord2018representation}
+Aaron van~den Oord, Yazhe Li, and Oriol Vinyals.
+\newblock Representation learning with contrastive predictive coding.
+\newblock {\em arXiv preprint arXiv:1807.03748}, 2018.
+
+\bibitem{ruder2016overview}
+Sebastian Ruder.
+\newblock An overview of gradient descent optimization algorithms.
+\newblock {\em arXiv preprint arXiv:1609.04747}, 2016.
+
+\bibitem{rumelhart1986learning}
+David~E Rumelhart, Geoffrey~E Hinton, and Ronald~J Williams.
+\newblock Learning representations by back-propagating errors.
+\newblock {\em nature}, 323(6088):533--536, 1986.
+
+\bibitem{salakhutdinov2007learning}
+Ruslan Salakhutdinov and Geoff Hinton.
+\newblock Learning a nonlinear embedding by preserving class neighbourhood
+  structure.
+\newblock In {\em Artificial Intelligence and Statistics}, pages 412--419,
+  2007.
+
+\bibitem{schroff2015facenet}
+Florian Schroff, Dmitry Kalenichenko, and James Philbin.
+\newblock Facenet: A unified embedding for face recognition and clustering.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 815--823, 2015.
+
+\bibitem{sermanet2017time}
+Pierre Sermanet, Corey Lynch, Yevgen Chebotar, Jasmine Hsu, Eric Jang, Stefan
+  Schaal, Sergey Levine, and Google Brain.
+\newblock Time-contrastive networks: Self-supervised learning from video.
+\newblock In {\em 2018 IEEE International Conference on Robotics and Automation
+  (ICRA)}, 2018.
+
+\bibitem{Simonyan15}
+Karen Simonyan and Andrew Zisserman.
+\newblock Very deep convolutional networks for large-scale image recognition.
+\newblock In {\em International Conference on Learning Representations}, 2015.
+
+\bibitem{sohn2016improved}
+Kihyuk Sohn.
+\newblock Improved deep metric learning with multi-class n-pair loss objective.
+\newblock In {\em Advances in neural information processing systems}, pages
+  1857--1865, 2016.
+
+\bibitem{sukhbaatar2014training}
+Sainbayar Sukhbaatar, Joan Bruna, Manohar Paluri, Lubomir Bourdev, and Rob
+  Fergus.
+\newblock Training convolutional networks with noisy labels.
+\newblock {\em arXiv preprint arXiv:1406.2080}, 2014.
+
+\bibitem{szegedy2016rethinking}
+Christian Szegedy, Vincent Vanhoucke, Sergey Ioffe, Jon Shlens, and Zbigniew
+  Wojna.
+\newblock Rethinking the inception architecture for computer vision.
+\newblock In {\em Proceedings of the IEEE conference on computer vision and
+  pattern recognition}, pages 2818--2826, 2016.
+
+\bibitem{tian2019contrastive}
+Yonglong Tian, Dilip Krishnan, and Phillip Isola.
+\newblock Contrastive multiview coding.
+\newblock {\em arXiv preprint arXiv:1906.05849}, 2019.
+
+\bibitem{tian2020makes}
+Yonglong Tian, Chen Sun, Ben Poole, Dilip Krishnan, Cordelia Schmid, and
+  Phillip Isola.
+\newblock What makes for good views for contrastive learning.
+\newblock {\em arXiv preprint arXiv:2005.10243}, 2019.
+
+\bibitem{tieleman2012lecture}
+Tijmen Tieleman and Geoffrey Hinton.
+\newblock Lecture 6.5-rmsprop: Divide the gradient by a running average of its
+  recent magnitude.
+\newblock {\em COURSERA: Neural networks for machine learning}, 4(2):26--31,
+  2012.
+
+\bibitem{tschannen2019mutual}
+Michael Tschannen, Josip Djolonga, Paul~K Rubenstein, Sylvain Gelly, and Mario
+  Lucic.
+\newblock On mutual information maximization for representation learning.
+\newblock {\em arXiv preprint arXiv:1907.13625}, 2019.
+
+\bibitem{wang2020understanding}
+Tongzhou Wang and Phillip Isola.
+\newblock Understanding contrastive representation learning through alignment
+  and uniformity on the hypersphere.
+\newblock {\em arXiv preprint arXiv:2005.10242}, 2020.
+
+\bibitem{weinberger2009distance}
+Kilian~Q Weinberger and Lawrence~K Saul.
+\newblock Distance metric learning for large margin nearest neighbor
+  classification.
+\newblock {\em Journal of Machine Learning Research}, 10(Feb):207--244, 2009.
+
+\bibitem{wu2018improving}
+Zhirong Wu, Alexei~A Efros, and Stella Yu.
+\newblock Improving generalization via scalable neighborhood component
+  analysis.
+\newblock In {\em European Conference on Computer Vision (ECCV) 2018}, 2018.
+
+\bibitem{wu2018unsupervised}
+Zhirong Wu, Yuanjun Xiong, Stella~X Yu, and Dahua Lin.
+\newblock Unsupervised feature learning via non-parametric instance
+  discrimination.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 3733--3742, 2018.
+
+\bibitem{xie2019self}
+Qizhe Xie, Eduard Hovy, Minh-Thang Luong, and Quoc~V Le.
+\newblock Self-training with noisy student improves imagenet classification.
+\newblock {\em arXiv preprint arXiv:1911.04252}, 2019.
+
+\bibitem{yang2015deep}
+Shuo Yang, Ping Luo, Chen~Change Loy, Kenneth~W Shum, and Xiaoou Tang.
+\newblock Deep representation learning with target coding.
+\newblock In {\em Twenty-Ninth AAAI Conference on Artificial Intelligence},
+  2015.
+
+\bibitem{yang2019xlnet}
+Zhilin Yang, Zihang Dai, Yiming Yang, Jaime Carbonell, Russ~R Salakhutdinov,
+  and Quoc~V Le.
+\newblock Xlnet: Generalized autoregressive pretraining for language
+  understanding.
+\newblock In {\em Advances in neural information processing systems}, pages
+  5754--5764, 2019.
+
+\bibitem{you2017large}
+Yang You, Igor Gitman, and Boris Ginsburg.
+\newblock Large batch training of convolutional networks.
+\newblock {\em arXiv preprint arXiv:1708.03888}, 2017.
+
+\bibitem{yun2019cutmix}
+Sangdoo Yun, Dongyoon Han, Seong~Joon Oh, Sanghyuk Chun, Junsuk Choe, and
+  Youngjoon Yoo.
+\newblock Cutmix: Regularization strategy to train strong classifiers with
+  localizable features.
+\newblock In {\em Proceedings of the IEEE International Conference on Computer
+  Vision}, pages 6023--6032, 2019.
+
+\bibitem{zhang2017mixup}
+Hongyi Zhang, Moustapha Cisse, Yann~N Dauphin, and David Lopez-Paz.
+\newblock mixup: Beyond empirical risk minimization.
+\newblock {\em arXiv preprint arXiv:1710.09412}, 2017.
+
+\bibitem{zhang2016colorful}
+Richard Zhang, Phillip Isola, and Alexei~A Efros.
+\newblock Colorful image colorization.
+\newblock In {\em European conference on computer vision}, pages 649--666.
+  Springer, 2016.
+
+\bibitem{zhang2017split}
+Richard Zhang, Phillip Isola, and Alexei~A Efros.
+\newblock Split-brain autoencoders: Unsupervised learning by cross-channel
+  prediction.
+\newblock In {\em Proceedings of the IEEE Conference on Computer Vision and
+  Pattern Recognition}, pages 1058--1067, 2017.
+
+\bibitem{zhang2018generalized}
+Zhilu Zhang and Mert Sabuncu.
+\newblock Generalized cross entropy loss for training deep neural networks with
+  noisy labels.
+\newblock In {\em Advances in neural information processing systems}, pages
+  8778--8788, 2018.
+
+\end{thebibliography}

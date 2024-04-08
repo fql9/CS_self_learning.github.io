@@ -1,0 +1,150 @@
+\section{Method}
+
+Our method is structurally similar to that used in \cite{tian2019contrastive,chen2020simple} for self-supervised contrastive learning, with modifications for supervised classification. Given an input batch of data, we first apply data augmentation twice to obtain two copies of the batch. Both copies are forward propagated through the encoder network to obtain a 2048-dimensional normalized embedding. During training, this representation is further propagated through a projection network that is discarded at inference time. The supervised contrastive loss is computed on the outputs of the projection network. To use the trained model for classification, we train a linear classifier on top of the frozen representations using a cross-entropy loss. Fig. 1 in the Supplementary material provides a visual explanation.
+
+
+
+\subsection{Representation Learning Framework}
+The main components of our framework are:
+\begin{itemize}[leftmargin=*]
+  \item [$\bullet$] \emph{Data Augmentation} module, $Aug(\cdot)$. For each input sample, $\boldsymbol{x}$, we generate two random augmentations, $\boldsymbol{\tilde{x}} = Aug(\boldsymbol{x})$,  each of which represents a different \emph{view} of the data and contains some subset of the information in the original sample. Sec. \ref{sec:experiments} gives details of the augmentations.
+
+  \item[$\bullet$] \emph{Encoder Network}, $Enc(\cdot)$, which maps $\boldsymbol{x}$ to a representation vector, $\boldsymbol{r}=Enc(\boldsymbol{x})\in\mathcal{R}^{D_E}$. Both augmented samples are separately input to the same encoder, resulting in a pair of representation vectors. $\boldsymbol{r}$ is normalized to the unit hypersphere in $\mathcal{R}^{D_E}$ ($D_E = 2048$ in all our experiments in the paper). Consistent with the findings of \cite{schroff2015facenet,wang2020understanding}, our analysis and experiments show that this normalization improves top-1 accuracy. %
+  
+  \item[$\bullet$] \emph{Projection Network}, $Proj(\cdot)$, which maps $\boldsymbol{r}$ to a vector $\boldsymbol{z}=Proj(\boldsymbol{r})\in\mathcal{R}^{D_P}$. We instantiate $Proj(\cdot)$ as either a multi-layer perceptron \cite{hastie2001statisticallearning} with a single hidden layer of size $2048$ and output vector of size $D_P=128$ or just a single linear layer of size $D_P=128$; we leave to future work the investigation of optimal $Proj(\cdot)$ architectures. We again normalize the output of this network to lie on the unit hypersphere, which enables using an inner product to measure distances in the projection space. As in self-supervised contrastive learning \cite{tian2019contrastive,chen2020simple}, we discard $Proj(\cdot)$ at the end of contrastive training. As a result, our inference-time models contain exactly the same number of parameters as a cross-entropy model using the same encoder, $Enc(\cdot)$. 
+\end{itemize}
+
+\subsection{Contrastive Loss Functions}
+\label{sec:contrastive_losses}
+Given this framework, we now look at the family of contrastive losses, starting from the self-supervised domain and analyzing the options for adapting it to the supervised domain, showing that one formulation is superior. For a set of $N$ randomly sampled sample/label pairs, $\{\boldsymbol{x}_k,\boldsymbol{y}_k\}_{k=1...N}$, the corresponding batch used for training consists of $2N$ pairs, $\{\boldsymbol{\tilde{x}}_\ell,\boldsymbol{\tilde{y}}_\ell\}_{\ell=1...2N}$, where $\boldsymbol{\tilde{x}}_{2k}$ and $\boldsymbol{\tilde{x}}_{2k-1}$ are two random augmentations (a.k.a., ``views") of $\boldsymbol{x}_k$ ($k=1...N$) and $\boldsymbol{\tilde{y}}_{2k-1}=\boldsymbol{\tilde{y}}_{2k}=\boldsymbol{y}_k$. For the remainder of this paper, we will refer to a set of $N$ samples as a ``batch" and the set of $2N$ augmented samples as a ``multiviewed batch".
+
+\subsubsection{Self-Supervised Contrastive Loss}
+Within a multiviewed batch, let $i\in I\equiv\{1...2N\}$ be the index of an arbitrary augmented sample, and let $j(i)$ be the index of the other augmented sample originating from the same source sample. In \emph{self-supervised} contrastive learning (e.g., \cite{chen2020simple,tian2019contrastive,henaff2019data,hjelm2018learning}), the loss takes the following form.
+\begin{equation}
+  \mathcal{L}^{self}
+  =\sum_{i\in I}\mathcal{L}_i^{self}
+  =-\sum_{i\in I}\log{
+  \frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{j(i)}/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}
+  }
+  \label{eqn:self_loss}
+\end{equation}
+Here, $\boldsymbol{z}_\ell=Proj(Enc(\boldsymbol{\tilde{x}}_\ell))\in\mathcal{R}^{D_P}$, the $\bigcdot$ symbol denotes the inner (dot) product, $\tau\in\mathcal{R}^+$ is a scalar temperature parameter, and $A(i)\equiv I\setminus\{i\}$. The index $i$ is called the \emph{anchor}, index $j(i)$ is called the \emph{positive}, and the other $2(N-1)$ indices ($\{k\in A(i)\setminus\{j(i)\}$) are called the \emph{negatives}. Note that for each anchor $i$, there is $1$ positive pair and $2N - 2$ negative pairs. The denominator has a total of $2N - 1$ terms (the positive and negatives). 
+
+\subsubsection{Supervised Contrastive Losses}
+For supervised learning, the contrastive loss in Eq. \ref{eqn:self_loss} is incapable of handling the case where, due to the presence of labels, more than one sample is known to belong to the same class. Generalization to an arbitrary numbers of positives, though, leads to a choice between multiple possible functions. Eqs. \ref{eqn:supervised_loss} and \ref{eqn:bad_supervised_loss} present the two most straightforward ways to generalize Eq. \ref{eqn:self_loss} to incorporate supervision.
+\begin{equation}
+  \mathcal{L}_{out}^{sup}
+  =\sum_{i\in I}\mathcal{L}_{out,i}^{sup}
+  =\sum_{i\in I}\frac{-1}{|P(i)|}\sum_{p\in P(i)}\log{\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}}
+  \label{eqn:supervised_loss}
+\end{equation}
+\begin{equation}
+  \mathcal{L}_{in}^{sup}
+  =\sum_{i\in I}\mathcal{L}_{in,i}^{sup}
+  =\sum_{i\in I}-\log\left\{\frac{1}{|P(i)|}\sum_{p\in P(i)}\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)}\right\}
+  \label{eqn:bad_supervised_loss}
+\end{equation}
+Here, $P(i)\equiv\{p\in A(i):\boldsymbol{\tilde{y}}_p=\boldsymbol{\tilde{y}}_i\}$ is the set of indices of all positives in the multiviewed batch distinct from $i$, and $|P(i)|$ is its cardinality. In Eq. \ref{eqn:supervised_loss}, the summation over positives is located \emph{outside} of the $\log$ ($\mathcal{L}_{out}^{sup}$) while in Eq. \ref{eqn:bad_supervised_loss}, the summation is located \emph{inside} of the $\log$ ($\mathcal{L}_{in}^{sup}$). Both losses have the following desirable properties:
+
+\begin{itemize}[leftmargin=*]
+  \item[$\bullet$] \textbf{Generalization to an arbitrary number of positives.} The major structural change of Eqs. \ref{eqn:supervised_loss} and \ref{eqn:bad_supervised_loss} over Eq. \ref{eqn:self_loss} is that now, for any anchor, \emph{all} positives in a multiviewed batch (i.e., the augmentation-based sample as well as any of the remaining samples with the same label) contribute to the numerator. For randomly-generated batches whose size is large with respect to the number of classes, multiple additional terms will be present (on average, $N/C$, where $C$ is the number of classes). The supervised losses encourage the encoder to give closely aligned representations to \emph{all} entries from the same class, resulting in a more robust clustering of the representation space than that generated from Eq. \ref{eqn:self_loss}, as is supported by our experiments in Sec.~\ref{sec:experiments}. \if{false}{In Fig.~\ref{fig:teaser}(left), we show this visually for the case of $2$ classes.}\fi
+
+  \item[$\bullet$] \textbf{Contrastive power increases with more negatives.} Eqs. \ref{eqn:supervised_loss} and \ref{eqn:bad_supervised_loss} both preserve the summation over negatives in the contrastive denominator of Eq. \ref{eqn:self_loss}. This form is largely motivated by noise contrastive estimation and N-pair losses \cite{gutmann2010noise,sohn2016improved}, wherein the ability to discriminate between signal and noise (negatives) is improved by adding more examples of negatives. This property is important for representation learning via self-supervised contrastive learning, with many papers showing increased performance with increasing number of negatives \cite{henaff2019data,he2019momentum,tian2019contrastive,chen2020simple}.
+
+  \item[$\bullet$] \textbf{Intrinsic ability to perform hard positive/negative mining.} When used with \emph{normalized} representations, the loss in Eq. \ref{eqn:self_loss} induces a gradient structure that gives rise to implicit hard positive/negative mining. The gradient contributions from \emph{hard} positives/negatives (i.e., ones against which continuing to contrast the anchor \emph{greatly} benefits the encoder) are large while those for \emph{easy} positives/negatives (i.e., ones against which continuing to contrast the anchor only \emph{weakly} benefits the encoder) are small. Furthermore, for hard positives, the effect increases (asymptotically) as the number of negatives does. Eqs. \ref{eqn:supervised_loss} and \ref{eqn:bad_supervised_loss} both preserve this useful property and generalize it to all positives. This implicit property allows the contrastive loss to sidestep the need for explicit hard mining, which is a delicate but critical part of many losses, such as triplet loss \cite{schroff2015facenet}. We note that this implicit property applies to both supervised and self-supervised contrastive losses, but our derivation is the first to clearly show this property. We provide a full derivation of this property from the loss gradient in the Supplementary material.
+\end{itemize}
+
+\begin{wraptable}{r}{0.35\textwidth}
+    \vspace{-20pt}
+    \centering
+  \centering
+  \begin{tabular}{cc}
+    \toprule
+    Loss & Top-1 \\
+    \midrule
+    &\\[-.9em]
+    $\mathcal{L}_{out}^{sup}$ & 78.7\% \\
+    $\mathcal{L}_{in}^{sup}$ & 67.4\% \\
+    \bottomrule
+  \end{tabular}
+  \caption{\small ImageNet Top-1 classification accuracy for supervised contrastive losses on ResNet-50 for a batch size of 6144. %
+  }
+  \vspace{-10pt}
+  \label{tab:supervised_loss_variants}
+\end{wraptable}
+
+
+
+The two loss formulations are not, however, equivalent.
+Because $\log$ is a concave function, Jensen's Inequality \cite{jensen1906sur} implies that $\mathcal{L}_{in}^{sup}\le\mathcal{L}_{out}^{sup}$. One would thus expect $\mathcal{L}_{out}^{sup}$ to be the superior supervised loss function (since it upper-bounds $\mathcal{L}_{in}^{sup}$). This conclusion is also supported analytically.
+% Because $\log$ is a concave function, Jensen's Inequality \cite{jensen1906sur} implies that $\mathcal{L}_{out}^{sup}\le\mathcal{L}_{in}^{sup}$. One might thus be tempted to conclude that $\mathcal{L}_{in}^{sup}$ is the superior supervised loss function (since it bounds $\mathcal{L}_{out}^{sup}$).
+% However, this conclusion is \emph{not} supported analytically.
+Table \ref{tab:supervised_loss_variants} compares the ImageNet \cite{deng2009imagenet} top-1 classification accuracy using $\mathcal{L}_{out}^{sup}$ and $\mathcal{L}_{in}^{sup}$ for different batch sizes ($N$) on the ResNet-50 \cite{he2016deep} architecture. The $\mathcal{L}_{out}^{sup}$ supervised loss achieves significantly higher performance than $\mathcal{L}_{in}^{sup}$. We conjecture that this is due to the gradient of $\mathcal{L}_{in}^{sup}$ having structure less optimal for training than that of $\mathcal{L}_{out}^{sup}$. For $\mathcal{L}_{out}^{sup}$, the positives normalization factor (i.e., $1/|P(i)|$) serves to remove bias present in the positives in a multiviewed batch contributing to the loss. However, though $\mathcal{L}_{in}^{sup}$ also contains the same normalization factor, it is located \emph{inside} of the $\log$. It thus contributes only an additive constant to the overall loss, which does not affect the gradient. Without any normalization effects, the gradients of $\mathcal{L}_{in}^{sup}$ are more susceptible to bias in the positives, leading to sub-optimal training.
+
+
+An analysis of the gradients themselves supports this conclusion. As shown in the Supplementary, the gradient for \emph{either} $\mathcal{L}_{out,i}^{sup}$ or $\mathcal{L}_{in,i}^{sup}$ with respect to the embedding $\boldsymbol{z}_i$ has the following form. %
+\begin{equation}
+  \label{eqn:gradient}
+  \frac{\partial\mathcal{L}_i^{sup}}{\partial\boldsymbol{z}_i} = \frac{1}{\tau}\left\{
+  \sum_{p\in P(i)}\boldsymbol{z}_p(P_{ip}-X_{ip})+
+  \sum_{n\in N(i)}\boldsymbol{z}_nP_{in}
+  \right\}
+\end{equation}
+Here, $N(i)\equiv\{n\in A(i):\boldsymbol{\tilde{y}}_n\neq\boldsymbol{\tilde{y}}_i\}$ is the set of indices of all negatives in the multiviewed batch, and $P_{ix}\equiv\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_x/\tau\right)/\sum_{a\in A(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_a/\tau\right)$. The difference between the gradients for the two losses is in $X_{ip}$.
+\begin{equation}
+  X_{ip}=\left\{
+  \begin{matrix}
+  \frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_p/\tau\right)}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\boldsymbol{z}_{p'}/\tau\right)} & , & \text{if }\mathcal{L}_i^{sup}=\mathcal{L}_{in,i}^{sup}\\
+  \frac{1}{|P(i)|} & , & \text{if }\mathcal{L}_i^{sup}=\mathcal{L}_{out,i}^{sup}
+  \end{matrix}\right.
+\end{equation}
+If each $\boldsymbol{z}_p$ is set to the (less biased) mean positive representation vector, $\overline{\boldsymbol{z}}$, $X_{ip}^{in}$ reduces to $X_{ip}^{out}$:
+\begin{equation}
+  \left.X_{ip}^{in}\right|_{\boldsymbol{z}_p=\overline{\boldsymbol{z}}}
+  =\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\overline{\boldsymbol{z}}/\tau\right)}{\sum\limits_{p'\in P(i)}\text{exp}\left(\boldsymbol{z}_i\bigcdot\overline{\boldsymbol{z}}/\tau\right)}
+  =\frac{\text{exp}\left(\boldsymbol{z}_i\bigcdot\overline{\boldsymbol{z}}/\tau\right)}{|P(i)|\cdot\text{exp}\left(\boldsymbol{z}_i\bigcdot\overline{\boldsymbol{z}}/\tau\right)}
+  =\frac{1}{|P(i)|}
+  =X_{ip}^{out}
+\end{equation}
+From the form of $\partial\mathcal{L}_i^{sup}/\partial\boldsymbol{z}_i$, we conclude that the stabilization due to using the mean of positives benefits training. %
+Throughout the rest of the paper, we consider only $\mathcal{L}_{out}^{sup}$.
+
+\subsubsection{Connection to Triplet Loss and N-pairs Loss}
+Supervised contrastive learning is closely related to the triplet loss \cite{weinberger2009distance}, one of the widely-used loss functions for supervised learning. In the Supplementary, we show that the triplet loss is a special case of the contrastive loss when one positive and one negative are used. When more than one negative is used, we show that the SupCon loss becomes equivalent to the N-pairs loss \cite{sohn2016improved}.
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
