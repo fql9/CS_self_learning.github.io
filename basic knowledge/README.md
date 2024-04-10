@@ -1,2 +1,3 @@
 # Nevigation:
-[CSAPP](./CSAPP)
++ [CSAPP](./CSAPP)
++ [SICP(Python)](./SICP_python)
