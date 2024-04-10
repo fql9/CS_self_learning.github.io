@@ -7,7 +7,7 @@ Code from various chapters in OSTEP (http://www.ostep.org)
 
 CPU Virtualization Chapters:
 * Processes
-* [Process API](cpu-api)
+* [Process API](/cpu-api)
 * Direct Execution
 * CPU Scheduling
 * Multi-level Feedback
