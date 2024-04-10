@@ -9,8 +9,3 @@
 + [EPUB格式](https://www.gitbook.com/download/epub/book/wizardforcel/sicp-py)
 + [MOBI格式](https://www.gitbook.com/download/mobi/book/wizardforcel/sicp-py)
 + [Github](https://github.com/wizardforcel/sicp-py-zh)
-
-
-## 协议
-
-[CC BY-NC-SA 4.0](http://creativecommons.org/licenses/by-nc-sa/4.0/)
