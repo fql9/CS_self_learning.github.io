@@ -3,7 +3,7 @@
 原文：[CS61A: Online Textbook](http://www-inst.eecs.berkeley.edu/~cs61a/sp12/book/)
 搬運自：[Github](https://github.com/wizardforcel/sicp-py-zh)
 + [第一章 使用函数构建抽象](ch1.md)
-    + [1.1 引言](../1.1.md)
+    + [1.1 引言](~/1.1.md)
     + [1.2 编程元素](1.2.md)
     + [1.3 定义新的函数](1.3.md)
     + [1.4 实践指南：函数的艺术](1.4.md)
