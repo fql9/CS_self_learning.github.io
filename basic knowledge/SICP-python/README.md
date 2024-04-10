@@ -10,9 +10,6 @@
 + [MOBI格式](https://www.gitbook.com/download/mobi/book/wizardforcel/sicp-py)
 + [Github](https://github.com/wizardforcel/sicp-py-zh)
 
-## 赞助我
-
-![](img/qr_alipay.png)
 
 ## 协议
 
