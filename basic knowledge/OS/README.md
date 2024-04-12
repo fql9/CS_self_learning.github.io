@@ -5,4 +5,4 @@
   + [homework]()
 + **OSTEP**
   + [Chinese version](./OSTEP_Chinese.md)
-  + [homework](https://github.com/remzi-arpacidusseau/ostep-homework)
+  + [homework](https://github.com/remzi-arpacidusseau/ostep-homework) [project](https://github.com/remzi-arpacidusseau/ostep-projects) [code](https://github.com/remzi-arpacidusseau/ostep-projects)
