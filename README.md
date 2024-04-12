@@ -1,4 +1,4 @@
-# For-Self-learning ONLY
+# **FOR STUDY ONLY**
 ## **navigation:**
 + [Computer Vision]()
 + [Background Knowledge](/background-knowledge)
