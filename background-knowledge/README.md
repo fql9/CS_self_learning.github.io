@@ -1,4 +1,3 @@
-# Nevigation:
 + [CSAPP](./CSAPP)
 + [SICP(Python)](./SICP-python)
     + [Course Website(ucb-cs61a-2020)](https://inst.eecs.berkeley.edu/~cs61a/su20/)
