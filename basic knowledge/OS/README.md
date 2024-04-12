@@ -4,5 +4,4 @@
   + [Lab-1](./mit6.828-labNotes/lab1) [Lab-2](./mit6.828-labNotes/lab2) [Lab-3](./mit6.828-labNotes/lab3) [Lab-4](./mit6.828-labNotes/lab4) [Lab-5](./mit6.828-labNotes/lab5)
   + [homework]()
 + **OSTEP**
-  + [Official Website]()
   + [Chinese version](./OSTEP_Chinese.md)
