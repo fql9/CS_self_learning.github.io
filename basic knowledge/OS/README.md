@@ -5,4 +5,4 @@
   + [homework]()
 + **OSTEP**
   + [Official Website]()
-  + [Chinese version](./OSTEP_Chinese,md)
+  + [Chinese version](./OSTEP_Chinese.md)
