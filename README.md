@@ -2,4 +2,4 @@
 ## **navigation:**
 + [Computer Vision]()
 + [Background Knowledge](/background-knowledge)
-+ Languages: [cpp](./cpp)[python](./python)
++ Languages: [cpp](./cpp) [python](./python)
