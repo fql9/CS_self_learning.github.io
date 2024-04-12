@@ -1,4 +1,4 @@
 # For-Self-learning
 ## **navigation:**
-+ Computer Vision:
++ [Computer Vision]
 + [Background Knowledge](./basic knowledge)
