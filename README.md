@@ -1,5 +1,5 @@
 # **FOR STUDY ONLY**
 ## **navigation:**
-+ [Computer Vision]()
++ [Computer Vision](./CV)
 + [Background Knowledge](/background-knowledge)
 + Languages: [cpp](./cpp) [python](./python)
