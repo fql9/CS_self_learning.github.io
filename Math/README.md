@@ -1,1 +1,1 @@
-[Posibility](./)
+[probability theory](./)
