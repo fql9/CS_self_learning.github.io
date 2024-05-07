@@ -4,6 +4,6 @@
 + [Math](./Math)
 + [Background Knowledge](/background-knowledge)
 + Languages: [cpp](./language/cpp) [python](./language/python)
-+ Toolkit: [Qt](./toolkit/Qt) [Figma](./toolkit/figma) [Obsidian](./toolkit/obsidian)
++ Toolkit: [Qt](./toolkit/Qt) [React](./toolkit/react) [Figma](./toolkit/figma) [Obsidian](./toolkit/obsidian)
 + [Other useful things](./toolkit/other)
 
