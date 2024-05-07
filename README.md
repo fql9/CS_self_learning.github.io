@@ -5,5 +5,5 @@
 + [Background Knowledge](/background-knowledge)
 + Languages: [cpp](./language/cpp) [python](./language/python)
 + Toolkit: [Qt](./toolkit/Qt)
-+ [Other useful things](./other)
++ [Other useful things](./toolkit/other)
 
