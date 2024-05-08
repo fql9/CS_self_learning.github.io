@@ -1,52 +1,117 @@
-C++17 STL Cook book
-=========================
-*函数式编程和Lambda表达式的最新功能*
--------------------------
-- 作者：Jacek Galowicz
-- 译者：陈晓伟
+# 目录
 
-## 本书主旨
-
-- 了解C++最新的特性，使用标准库(STL)编写更优秀的代码，使用最新特性和STL节省开发上的时间开销。
-- 了解STL特性所适用的范围和能力，并用其特性解决实际问题。
-- 简洁优雅地使用STL实现算法。
-
-## 本书概述
-
-作为对《C++17 STL Cook book》的中文翻译。
-
-C++因其快捷、高效和灵活的特点，帮助人们解决了很多问题，在很多领域种都有所使用。其将要到来的新版本，将会改变人们的编程习惯。如果想要掌握更加高明的编程方式，或是让代码更轻松地移植，就必须熟练掌握C++17 STL。本书将会通过实际例子帮助你了解C++17 STL，并掌握C++17 STL的使用方法。
-
-本书将帮助你了解新版本的语言机制和标准库特性，并且告诉你他们如何工作。与众不同的是，我们会采用针对问题的特定解决方案，来帮助你克服使用方面的障碍。我们使用STL来解决实际问题，这样你就能了解到STL的核心，比如容器、算法、工具类、Lambda表达式，迭代器等等。这些实际问题的解决在展示如何更好编程的同时，帮助我们更多的了解STL。
-
-看完本书后，你将了解到C++17最新的功能，并优雅地使用STL，且高效的解决难题。
-
-## 将会学到
-
-- 了解新语言的核心特性，以及这些特性所解决的问题。
-- 通过实现迭代器来了解特性的需求，以及其内部工作流程。
-- 探索算法、函数编程风格和Lambda表达式。
-- 使用STL中提供的丰富、可移植、快速、久经考验、精心设计的算法。
-- 使用STL中的字符串代替C风格的字符串。
-- 了解支持并发和同步的标准类，以及如何使用
-- 使用C++17 STL中的文件系统库
-
-## 作者简介
-
-Jacek Galowicz 在德国亚琛工业大学(Rheinisch-Westfälische Technische Hochschule Aachen University)获得电气工程/计算机工程硕士学位。在校期间，他特别喜欢以学生助教的身份参加教学和研究，并且在多项科技刊物发表文章。毕业后，他选择做一名自由执业职，并涉及很多领域，比如使用C和C ++编写内核驱动、 3维图像编程、数据库、网络通讯和物理模拟。近几年，他在Intel和FireEye平台上为Intel x86虚拟化编写性能和安全敏感的微内核操作系统，目前常驻于不伦瑞克(德国中北部城市，属下萨克森州)。 他对使用最新的C++实现低层软件有着强烈的热情，并且努力地将高性能与优雅地编码风格相结合。近年来学习纯粹的函数式编程和Haskell的经历，让他更有动力(在元编程的帮助下)实现泛型编码。 
-
-## 作者鸣谢
-
-感谢支持我翻译的各位同学们！
-
-写书的同时也在创办一家公司，给我带来很多乐趣的同时，也是次很有趣的人生体验。这些有趣的经历来源于我身边的每一个人，感谢我可爱的女友给予我的耐心和支持，以及我公司的合伙人，当然还有支持我的所有朋友。这里要特别感谢Arne Mertz为我提供的的宝贵的建议, 当然还有Torsten  Robitzki和来自于Oliver Bruns社区C++用户组的Hannover，感谢他们对本书的反馈。
-
-## 代码评审
-
-**Arne Mertz**是一个具有10多年C++经验的专家。他在汉堡大学攻读物理专业，而后转行成为一名软件开发攻城狮。其主要使用C++完成金融企业的应用程序。Arne就任于德国Zuhlke Engineering公司，并且它的博客也非常出名——[Simplify C++!](https://arne-mertz.de)。对于C++，其主张在使用清爽，并具有良好可维护性的代码风格。
-
-
-## 本书相关
-
-- github 翻译地址：https://github.com/xiaoweiChen/CPP-17-STL-cookbook
-- 本书源码：https://github.com/PacktPublishing/Cpp17-STL-Cookbook
+* [前言](content/preface/preface-chinese.md)
+* [关于本书](content/preface/about-this-book-chinese.md)
+* [各章梗概](content/preface/chapters-summary-chinese.md)
+* [第1章 C++17的新特性](content/chapter1/chapter1-0-chinese.md)
+  * [使用结构化绑定来解包绑定的返回值](content/chapter1/chapter1-1-chinese.md)
+  * [将变量作用域限制在if和switch区域内](content/chapter1/chapter1-2-chinese.md)
+  * [新的括号初始化规则](content/chapter1/chapter1-3-chinese.md)
+  * [构造函数自动推导模板的类型](content/chapter1/chapter1-4-chinese.md)
+  * [使用constexpr-if简化编译](content/chapter1/chapter1-5-chinese.md)
+  * [只有头文件的库中启用内联变量](content/chapter1/chapter1-6-chinese.md)
+  * [使用折叠表达式实现辅助函数](content/chapter1/chapter1-7-chinese.md)
+* [第2章 STL容器](content/chapter2/chapter2-0-chinese.md)
+  * [擦除/移除std::vector元素](content/chapter2/chapter2-1-chinese.md)
+  * [以O(1)的时间复杂度删除未排序std::vector中的元素](content/chapter2/chapter2-2-chinese.md)
+  * [快速或安全的访问std::vector实例的方法](content/chapter2/chapter2-3-chinese.md)
+  * [保持对std::vector实例的排序](content/chapter2/chapter2-4-chinese.md)
+  * [向std::map实例中高效并有条件的插入元素](content/chapter2/chapter2-5-chinese.md)
+  * [了解std::map::insert新的插入提示语义](content/chapter2/chapter2-6-chinese.md)
+  * [高效的修改std::map元素的键值](content/chapter2/chapter2-7-chinese.md)
+  * [std::unordered_map中使用自定义类型](content/chapter2/chapter2-8-chinese.md)
+  * [过滤用户的重复输入，并以字母序将重复信息打印出——std::set](content/chapter2/chapter2-9-chinese.md)
+  * [实现简单的逆波兰表示法计算器——std::stack](content/chapter2/chapter2-10-chinese.md)
+  * [实现词频计数器——std::map](content/chapter2/chapter2-11-chinese.md)
+  * [实现写作风格助手用来查找文本中很长的句子——std::multimap](content/chapter2/chapter2-12-chinese.md)
+  * [实现个人待办事项列表——std::priority_queue](content/chapter2/chapter2-13-chinese.md)
+* [第3章 迭代器](content/chapter3/chapter3-0-chinese.md)
+  * [建立可迭代区域](content/chapter3/chapter3-1-chinese.md)
+  * [让自己的迭代器与STL的迭代器兼容](content/chapter3/chapter3-2-chinese.md)
+  * [使用迭代适配器填充通用数据结构](content/chapter3/chapter3-3-chinese.md)
+  * [使用迭代器实现算法](content/chapter3/chapter3-4-chinese.md)
+  * [使用反向迭代适配器进行迭代](content/chapter3/chapter3-5-chinese.md)
+  * [使用哨兵终止迭代](content/chapter3/chapter3-6-chinese.md)
+  * [使用检查过的迭代器自动化检查迭代器代码](content/chapter3/chapter3-7-chinese.md)
+  * [构建zip迭代适配器](content/chapter3/chapter3-8-chinese.md)
+* [第4章 Lambda表达式](content/chapter4/chapter4-0-chinese.md)
+  * [使用Lambda表达式定义函数](content/chapter4/chapter4-1-chinese.md)
+  * [使用Lambda为std::function添加多态性](content/chapter4/chapter4-2-chinese.md)
+  * [并置函数](content/chapter4/chapter4-3-chinese.md)
+  * [通过逻辑连接创建复杂谓词](content/chapter4/chapter4-4-chinese.md)
+  * [使用同一输入调用多个函数](content/chapter4/chapter4-5-chinese.md)
+  * [使用std::accumulate和Lambda函数实现transform_if](content/chapter4/chapter4-6-chinese.md)
+  * [编译时生成笛卡尔乘积](content/chapter4/chapter4-7-chinese.md)
+* [第5章 STL基础算法](content/chapter5/chapter5-0-chinese.md)
+  * [容器间相互复制元素](content/chapter5/chapter5-1-chinese.md)
+  * [容器元素排序](content/chapter5/chapter5-2-chinese.md)
+  * [从容器中删除指定元素](content/chapter5/chapter5-3-chinese.md)
+  * [改变容器内容](content/chapter5/chapter5-4-chinese.md)
+  * [在有序和无序的vector中查找元素](content/chapter5/chapter5-5-chinese.md)
+  * [将vector中的值控制在特定数值范围内——std::clamp](content/chapter5/chapter5-6-chinese.md)
+  * [在字符串中定位模式并选择最佳实现——std::search](content/chapter5/chapter5-7-chinese.md)
+  * [对大vector进行采样](content/chapter5/chapter5-8-chinese.md)
+  * [生成输入序列的序列](content/chapter5/chapter5-9-chinese.md)
+  * [实现字典合并工具](content/chapter5/chapter5-10-chinese.md)
+* [第6章 STL算法的高级使用方式](content/chapter6/chapter6-0-chinese.md)
+  * [使用STL算法实现单词查找树类](content/chapter6/chapter6-1-chinese.md)
+  * [使用树实现搜索输入建议生成器](content/chapter6/chapter6-2-chinese.md)
+  * [使用STL数值算法实现傅里叶变换](content/chapter6/chapter6-3-chinese.md)
+  * [计算两个vector的误差和](content/chapter6/chapter6-4-chinese.md)
+  * [使用ASCII字符曼德尔布罗特集合](content/chapter6/chapter6-5-chinese.md)
+  * [实现分割算法](content/chapter6/chapter6-6-chinese.md)
+  * [将标准算法进行组合](content/chapter6/chapter6-7-chinese.md)
+  * [删除词组间连续的空格](content/chapter6/chapter6-8-chinese.md)
+  * [压缩和解压缩字符串](content/chapter6/chapter6-9-chinese.md)
+* [第7章 字符串, 流和正则表达](content/chapter7/chapter7-0-chinese.md)
+  * [创建、连接和转换字符串](content/chapter7/chapter7-1-chinese.md)
+  * [消除字符串开始和结束处的空格](content/chapter7/chapter7-2-chinese.md)
+  * [无需构造获取std::string](content/chapter7/chapter7-3-chinese.md)
+  * [从用户的输入读取数值](content/chapter7/chapter7-4-chinese.md)
+  * [计算文件中的单词数量](content/chapter7/chapter7-5-chinese.md)
+  * [格式化输出](content/chapter7/chapter7-6-chinese.md)
+  * [使用输入文件初始化复杂对象](content/chapter7/chapter7-7-chinese.md)
+  * [迭代器填充容器——std::istream](content/chapter7/chapter7-8-chinese.md)
+  * [迭代器进行打印——std::ostream](content/chapter7/chapter7-9-chinese.md)
+  * [使用特定代码段将输出重定向到文件](content/chapter7/chapter7-10-chinese.md)
+  * [通过集成std::char_traits创建自定义字符串类](content/chapter7/chapter7-11-chinese.md)
+  * [使用正则表达式库标记输入](content/chapter7/chapter7-12-chinese.md)
+  * [简单打印不同格式的数字](content/chapter7/chapter7-13-chinese.md)
+  * [从std::iostream错误中获取可读异常](content/chapter7/chapter7-14-chinese.md)
+* [第8章 工具类](content/chapter8/chapter8-0-chinese.md)
+  * [转换不同的时间单位——std::ratio](content/chapter8/chapter8-1-chinese.md)
+  * [转换绝对时间和相对时间——std::chrono](content/chapter8/chapter8-2-chinese.md)
+  * [安全的标识失败——std::optional](content/chapter8/chapter8-3-chinese.md)
+  * [对元组使用函数](content/chapter8/chapter8-4-chinese.md)
+  * [使用元组快速构成数据结构](content/chapter8/chapter8-5-chinese.md)
+  * [将`void*`替换为更为安全的std::any](content/chapter8/chapter8-6-chinese.md)
+  * [存储不同的类型——std::variant](content/chapter8/chapter8-7-chinese.md)
+  * [自动化管理资源——std::unique_ptr](content/chapter8/chapter8-8-chinese.md)
+  * [处理共享堆内存——std::shared_ptr](content/chapter8/chapter8-9-chinese.md)
+  * [对共享对象使用弱指针](content/chapter8/chapter8-10-chinese.md)
+  * [使用智能指针简化处理遗留API](content/chapter8/chapter8-11-chinese.md)
+  * [共享同一对象的不同成员](content/chapter8/chapter8-12-chinese.md)
+  * [选择合适的引擎生成随机数](content/chapter8/chapter8-13-chinese.md)
+  * [让STL以指定分布方式产生随机数](content/chapter8/chapter8-14-chinese.md)
+* [第9章 并行和并发](content/chapter9/chapter9-0-chinese.md)
+  * [标准算法的自动并行](content/chapter9/chapter9-1-chinese.md)
+  * [让程序在特定时间休眠](content/chapter9/chapter9-2-chinese.md)
+  * [启动和停止线程](content/chapter9/chapter9-3-chinese.md)
+  * [打造异常安全的共享锁——std::unique_lock和std::shared_lock](content/chapter9/chapter9-4-chinese.md)
+  * [避免死锁——std::scoped_lock](content/chapter9/chapter9-5-chinese.md)
+  * [同步并行中使用std::cout](content/chapter9/chapter9-6-chinese.md)
+  * [进行延迟初始化——std::call_once](content/chapter9/chapter9-7-chinese.md)
+  * [将执行的程序推到后台——std::async](content/chapter9/chapter9-8-chinese.md)
+  * [实现生产者/消费者模型——std::condition_variable](content/chapter9/chapter9-9-chinese.md)
+  * [实现多生产者/多消费者模型——std::condition_variable](content/chapter9/chapter9-10-chinese.md)
+  * [并行ASCII曼德尔布罗特渲染器——std::async](content/chapter9/chapter9-11-chinese.md)
+  * [实现一个小型自动化并行库——std::future](content/chapter9/chapter9-12-chinese.md)
+* [第10章 文件系统](content/chapter10/chapter10-0-chinese.md)
+  * [实现标准化路径](content/chapter10/chapter10-1-chinese.md)
+  * [使用相对路径获取规范的文件路径](content/chapter10/chapter10-2-chinese.md)
+  * [列出目录下的所有文件](content/chapter10/chapter10-3-chinese.md)
+  * [实现一个类似grep的文本搜索工具](content/chapter10/chapter10-4-chinese.md)
+  * [实现一个自动文件重命名器](content/chapter10/chapter10-5-chinese.md)
+  * [实现一个磁盘使用统计器](content/chapter10/chapter10-6-chinese.md)
+  * [计算文件类型的统计信息](content/chapter10/chapter10-7-chinese.md)
+  * [实现一个工具：通过符号链接减少重复文件，从而控制文件夹大小](content/chapter10/chapter10-8-chinese.md)
