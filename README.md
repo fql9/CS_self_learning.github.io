@@ -1,4 +1,3 @@
-# **FOR STUDY ONLY**
 + Advanced Knowledge:[Computer Vision](./CV) [Deep Learning & Other Learnings](./DL) [Math](./Math)
 + [Background Knowledge](./background-knowledge)
 + Languages: [cpp](./language/cpp) [python](./language/python)
